@@ -3,7 +3,7 @@
   <spriteName>spr_rock</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-1</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -98,7 +98,8 @@ physics_apply_angular_impulse(random_range(1, 5));
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>physics_apply_local_force(0,0,phy_speed_x * fric, phy_speed_y * fric);
+            <string>/// Drag
+physics_apply_local_force(0,0,phy_speed_x * fric, phy_speed_y * fric);
 </string>
           </argument>
         </arguments>

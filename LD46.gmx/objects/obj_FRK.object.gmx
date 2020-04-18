@@ -68,7 +68,7 @@ food = -999;
 
 acc = MaxAcc;
 spd = MaxSpd;
-alarm[0] = 30;
+alarm[3] = 30;
 
 path = path_add();
 
@@ -78,7 +78,7 @@ isPlayer = false;
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="1">
+    <event eventtype="1" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -95,13 +95,15 @@ isPlayer = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>invurn = false;
+            <string>/// End game
+show_message("Game Over!");
+game_end();
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="0">
+    <event eventtype="2" enumb="3">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -143,7 +145,30 @@ for ( j = 0; j &lt; 360; j += raydensity)
         }
     }    
 }
-alarm[0] = 30;
+alarm[3] = 30;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>invurn = false;
 </string>
           </argument>
         </arguments>

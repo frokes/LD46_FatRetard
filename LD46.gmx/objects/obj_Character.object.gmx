@@ -28,7 +28,7 @@
             <string>/// Inherited variables
 stun = false;
 invurn = false;
-slow = false;
+slowed = false;
 
 HP = 3;
 HeartSpacing = 18;
@@ -46,6 +46,75 @@ fric = 50;
 facing = 3;
 
 phy_fixed_rotation = true;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>slowed = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>invurn = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>stun = false;
 </string>
           </argument>
         </arguments>
@@ -111,11 +180,11 @@ else if (mvspd_x &lt; 0)
     facing = 3;
 }
 
-if(mvspd_y &gt; 0)
+if(mvspd_y &lt; 0)
 {
     facing = 2;
 }
-else if (mvspd_y &lt; 0)
+else if (mvspd_y &gt; 0)
 {
     facing = 4;
 }
@@ -160,19 +229,168 @@ else if (mvspd_y &lt; 0)
           <argument>
             <kind>1</kind>
             <string>/// Physics apply force
+var SPD;
 if (sqrt(mvspd_x^^2 + mvspd_y^^2) &gt; 1 )
 {
     mvspd_x *= 0.707;
     mvspd_y *= 0.707;
 }
-if (phy_speed &lt; spd &amp;&amp; stun == false)
+if (slowed) {SPD = spd/2;} else {SPD = spd;}
+if (phy_speed &lt; SPD &amp;&amp; stun == false)
 {
-    physics_apply_force(x, y, mvspd_x * acc, mvspd_y * acc);
+    if(!slowed)
+    {
+        physics_apply_force(x, y, mvspd_x * acc, mvspd_y * acc);
+    }
+    else
+    {
+        physics_apply_force(x, y, mvspd_x * acc/4, mvspd_y * acc/4);
+    }
 }
 
 // friction
 if(mvspd_x == 0) { physics_apply_local_force(0,0,-phy_speed_x*fric,0); }
 if(mvspd_y == 0) { physics_apply_local_force(0,0,0,-phy_speed_y*fric); }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// HP Check
+if(HP &lt;= 0){ instance_destroy(); }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Freeze">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(!slowed)
+{
+    slowed = true;
+    alarm[2] = 150;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Flame">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Take dmg and activate invurn
+if(!invurn)
+{
+    HP -= 1;
+    invurn = true;
+    alarm[1] = 15;
+}
+with(other)
+{
+    instance_destroy();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_lightning">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Take dmg and activate invurn
+if(!invurn)
+{
+    HP -= 2;
+    invurn = true;
+    alarm[1] = 15;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Projectile">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Take dmg and activate invurn
+if(!invurn)
+{
+    HP--;
+    invurn = true;
+    alarm[1] = 15;
+}
 </string>
           </argument>
         </arguments>

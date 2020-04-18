@@ -11,10 +11,14 @@
     <sprite>sprites\spr_FRK</sprite>
     <sprite>sprites\spr_Food</sprite>
     <sprite>sprites\spr_Enemy</sprite>
-    <sprite>sprites\spr_fire</sprite>
+    <sprite>sprites\spr_flame</sprite>
     <sprite>sprites\spr_flag</sprite>
     <sprite>sprites\spr_rock</sprite>
     <sprite>sprites\spr_heart</sprite>
+    <sprite>sprites\spr_powerup</sprite>
+    <sprite>sprites\spr_powerup_border</sprite>
+    <sprite>sprites\spr_lightning</sprite>
+    <sprite>sprites\spr_ice</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -29,6 +33,9 @@
     <object>objects\obj_Character</object>
     <object>objects\obj_Flag</object>
     <object>objects\obj_Projectile</object>
+    <object>objects\obj_lightning</object>
+    <object>objects\obj_Flame</object>
+    <object>objects\obj_Freeze</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>
