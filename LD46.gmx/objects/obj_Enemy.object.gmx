@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_Collider</parentName>
+  <parentName>obj_Character</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -26,13 +26,19 @@
           <argument>
             <kind>1</kind>
             <string>/// Object variables
+event_inherited();
+
 spd = 20;
 acc = 300;
 
 turnRate = 500;
 turnAcc = 100;
 
+
+
 target = obj_FRK;
+
+HP = 4;
 </string>
           </argument>
         </arguments>
@@ -57,7 +63,29 @@ target = obj_FRK;
 
 isPlayer = false;
 
-event_inherited();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>invurn = false;
 </string>
           </argument>
         </arguments>
@@ -80,7 +108,7 @@ event_inherited();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>Stun = false;
+            <string>stun = false;
 </string>
           </argument>
         </arguments>
@@ -148,6 +176,56 @@ event_inherited();
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// HP Check
+if(HP == 0){ instance_destroy(); }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Projectile">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(!invurn)
+{
+    HP--;
+    invurn = true;
+    alarm[1] = 15;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="0">
       <action>
@@ -166,10 +244,13 @@ event_inherited();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var path = path_add();
+            <string>/// Debugging
+/*
+var path = path_add();
 mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true);
 draw_path(path,x,y,false);
 draw_self();
+*/
 </string>
           </argument>
         </arguments>

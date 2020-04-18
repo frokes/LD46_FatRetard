@@ -13,6 +13,8 @@
     <sprite>sprites\spr_Enemy</sprite>
     <sprite>sprites\spr_fire</sprite>
     <sprite>sprites\spr_flag</sprite>
+    <sprite>sprites\spr_rock</sprite>
+    <sprite>sprites\spr_heart</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -24,8 +26,9 @@
     <object>objects\obj_Food</object>
     <object>objects\obj_Enemy</object>
     <object>objects\obj_NavMesh</object>
-    <object>objects\obj_Collider</object>
-    <object>objects\obj_flag</object>
+    <object>objects\obj_Character</object>
+    <object>objects\obj_Flag</object>
+    <object>objects\obj_Projectile</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>

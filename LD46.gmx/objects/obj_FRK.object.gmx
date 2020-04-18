@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_Collider</parentName>
+  <parentName>obj_Character</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -26,13 +26,15 @@
           <argument>
             <kind>1</kind>
             <string>/// Object variables
+event_inherited();
+
 MaxSpd = 10;
 MaxAcc = 250;
 turnAcc = 3;
 turnSpd = 500;
 
 raylength = 500;
-raymin = 40;
+raymin = 45;
 raydensity = 5;
 
 HP = 3;
@@ -68,13 +70,32 @@ acc = MaxAcc;
 spd = MaxSpd;
 alarm[0] = 30;
 
-invurn = false;
-
 path = path_add();
 
 isPlayer = false;
-
-event_inherited();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>invurn = false;
 </string>
           </argument>
         </arguments>
@@ -107,11 +128,7 @@ for ( j = 0; j &lt; 360; j += raydensity)
     {
         ray_x = self.x + lengthdir_x(i,j)
         ray_y = self.y + lengthdir_y(i,j)
-        if(position_empty(ray_x, ray_y))
-        {
-            draw_point(ray_x, ray_y);
-        }
-        else
+        if(!position_empty(ray_x, ray_y))
         { 
             if (food &lt; 0)
             {
@@ -188,7 +205,7 @@ switch(state)
             flag_x = random_range(0, room_width/global.NavRes)*global.NavRes;
             flag_y = random_range(0, room_height/global.NavRes)*global.NavRes;
         }
-        target = instance_create(flag_x, flag_y, obj_flag);
+        target = instance_create(flag_x, flag_y, obj_Flag);
         dist = 0;
         state = "panic";
         spd = 25;
@@ -204,7 +221,6 @@ switch(state)
         {
             EnemyDistance = 9999999;
         }
-        show_debug_message(string(EnemyDistance));
         if( point_distance(x,y,target.x,target.y) &lt; 100)
         {
             with(target)
@@ -303,6 +319,8 @@ event_inherited();
 if(state != "panic")
 {
     HP--;
+    invurn = true;
+    alarm[1] = 30;
     state = "panic start";
 }
 else
@@ -315,7 +333,7 @@ else
 }
 with(other)
 {
-    Stun = true;
+    stun = true;
     alarm[0] = 30;
 }
 </string>
@@ -341,6 +359,7 @@ with(other)
           <argument>
             <kind>1</kind>
             <string>/// Raycast
+/*
 for ( j = 0; j &lt; 360; j += raydensity)
 {
     for (i = raymin; i &lt; raylength; i+=5)
@@ -361,7 +380,9 @@ draw_circle(x,y,PanicDistance,true);
 draw_path(path,x,y,true);
 draw_set_colour(c_red);
 draw_line(x,y,x + (moveTarget_x-x)*5,y + (moveTarget_y-y)*5);
+*/
 draw_self();
+
 </string>
           </argument>
         </arguments>
@@ -372,7 +393,7 @@ draw_self();
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
   <PhysicsObjectDensity>0.5</PhysicsObjectDensity>
-  <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
+  <PhysicsObjectRestitution>0.00999999977648258</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>2</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>0.100000001490116</PhysicsObjectAngularDamping>

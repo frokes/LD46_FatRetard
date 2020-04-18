@@ -75,9 +75,12 @@ global.NavMesh = mp_grid_create(0,0,nh,nw,global.NavRes,global.NavRes);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(0.1);
+            <string>/// Debug NavMesh
+/*
+draw_set_alpha(0.1);
 mp_grid_draw(global.NavMesh);
 draw_set_alpha(1);
+*/
 </string>
           </argument>
         </arguments>
