@@ -11,9 +11,12 @@
     <sprite>sprites\spr_FRK</sprite>
     <sprite>sprites\spr_Food</sprite>
     <sprite>sprites\spr_Enemy</sprite>
+    <sprite>sprites\spr_fire</sprite>
+    <sprite>sprites\spr_flag</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts"/>
   <objects name="objects">
     <object>objects\obj_Player</object>
     <object>objects\obj_Wall</object>
@@ -22,6 +25,7 @@
     <object>objects\obj_Enemy</object>
     <object>objects\obj_NavMesh</object>
     <object>objects\obj_Collider</object>
+    <object>objects\obj_flag</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>

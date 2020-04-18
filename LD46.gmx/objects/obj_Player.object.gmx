@@ -26,10 +26,12 @@
           <argument>
             <kind>1</kind>
             <string>/// Initialise Object variables
-spd = 30;
-acc = 150;
+spd = 20;
+acc = 500;
 turnAcc = 5;
 turnSpd = 500;
+
+particles = 10;
 
 
 </string>
@@ -188,7 +190,7 @@ if (sqrt(mvspd_x^^2 + mvspd_y^^2) &gt; spd)
     mvspd_x *= 0.707;
     mvspd_y *= 0.707;
 }
-if (speed &lt; spd)
+if (phy_speed &lt; spd)
 {
     physics_apply_force(obj_Player.x, obj_Player.y, mvspd_x * acc, mvspd_y * acc);
 }
@@ -213,7 +215,7 @@ if (speed &lt; spd)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>Rotate</string>
+            <string>Combat</string>
           </argument>
         </arguments>
       </action>
@@ -233,15 +235,24 @@ if (speed &lt; spd)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Rotate to face cursor
-/*var trq = phy_rotation - point_direction(self.x, self.y, mouse_x, mouse_y);
-if(abs(phy_angular_velocity) &lt; turnSpd)
+            <string>/// Get input and activate attacks
+pd = point_direction(x,y,mouse_x,mouse_y);
+if(mouse_check_button(mb_left))
 {
-    physics_apply_torque(trq*turnAcc);
-} 
-*/
+    partsys = part_system_create()
+    part_system_depth(partsys,-1);
+    
+    flame = part_type_create()
+    part_type_shape(flame,pt_shape_cloud);
+    part_type_orientation(flame,0,360,random_range(-5,5),0,0);
+    part_type_size(flame,0.2,0.3,0.04,0.01);
+    part_type_speed(flame,20,40,-0.5,0);
+    part_type_direction(flame,pd-15,pd+15,0,0);
+    part_type_life(flame,5,12);
+    
+    part_particles_create(partsys,x,y,flame,particles);
+}
 
-// phy_rotation = 0;
 </string>
           </argument>
         </arguments>
@@ -254,7 +265,7 @@ if(abs(phy_angular_velocity) &lt; turnSpd)
   <PhysicsObjectDensity>0.100000001490116</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
-  <PhysicsObjectLinearDamping>1</PhysicsObjectLinearDamping>
+  <PhysicsObjectLinearDamping>3</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>1</PhysicsObjectAngularDamping>
   <PhysicsObjectFriction>0.5</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>

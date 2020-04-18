@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_Collider</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -26,14 +26,19 @@
           <argument>
             <kind>1</kind>
             <string>/// Object variables
-spd = 10;
-acc = 25;
+MaxSpd = 10;
+MaxAcc = 250;
 turnAcc = 3;
 turnSpd = 500;
 
 raylength = 500;
 raymin = 40;
-raydensity = 4;
+raydensity = 5;
+
+HP = 3;
+invurnTime = 90;
+PanicDistance = 600;
+state = "follow";
 </string>
           </argument>
         </arguments>
@@ -56,13 +61,50 @@ raydensity = 4;
             <kind>1</kind>
             <string>/// Helper variables
 
+target = -999;
 food = -999;
+
+moveTarget_x = x;
+moveTarget_y = y;
+
+mvspd_x = 0;
+mvspd_y = 0;
+
+acc = MaxAcc;
+spd = MaxSpd;
+alarm[0] = 30;
+
+invurn = false;
+
+path = path_add();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Physics Init   
+phy_fixed_rotation = true;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -80,23 +122,189 @@ food = -999;
           <argument>
             <kind>1</kind>
             <string>/// Raycast
-/*
+if(state == "panic" || state == "panic start") { exit;}
+if(!instance_exists(food)) { food = -999; state = "follow";}
+var hit = -999;
 for ( j = 0; j &lt; 360; j += raydensity)
 {
-    for (i = raymin; i &lt; raylength; i++)
+    for (i = raymin; i &lt; raylength; i += 10)
     {
         ray_x = self.x + lengthdir_x(i,j)
         ray_y = self.y + lengthdir_y(i,j)
         if(position_empty(ray_x, ray_y))
         {
-            
+            draw_point(ray_x, ray_y);
         }
-        else { break }
-        
+        else
+        { 
+            if (food &lt; 0)
+            {
+                hit = collision_line(self.x,self.y,ray_x,ray_y,obj_Food,false,true);
+            }
+            else if (sqrt(food.x^^2 + food.y^^2) &gt; sqrt(ray_x^^2 + ray_y^^2))
+            {
+                hit = collision_line(self.x,self.y,ray_x,ray_y,obj_Food,false,true);
+            }
+            if (hit &gt; 0 ) { food = hit; state = "food"; target = food;}
+            break;
+        }
     }    
 }
-*/
+alarm[0] = 30;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>Check state and move accordningly</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Switch on state
+var dist, flag_x, flag_y, Enemy, EnemyDistance;
+show_debug_message(state);
+if(!instance_exists(target)){target = obj_Player}
+switch(state)
+{
+    case "follow":
+        target = obj_Player;
+        dist = 150;
+    break;
+    case "panic start":
+        
+        flag_x = random_range(0, room_width/global.NavRes)*global.NavRes;
+        flag_y = random_range(0, room_height/global.NavRes)*global.NavRes;
+        while(!mp_grid_path(global.NavMesh, path, x, y, flag_x, flag_y, true))
+        {
+            flag_x = random_range(0, room_width/global.NavRes)*global.NavRes;
+            flag_y = random_range(0, room_height/global.NavRes)*global.NavRes;
+        }
+        target = instance_create(flag_x, flag_y, obj_flag);
+        dist = 0;
+        state = "panic";
+        spd = 25;
+        acc = 500;
+    break;
+    case "panic":
+        if(instance_exists(obj_Enemy))
+        {
+            Enemy = instance_nearest(x,y,obj_Enemy);
+            EnemyDistance = point_distance(x,y,Enemy.x,Enemy.y);
+        }
+        else
+        {
+            EnemyDistance = 9999999;
+        }
+        show_debug_message(string(EnemyDistance));
+        if( point_distance(x,y,target.x,target.y) &lt; 100)
+        {
+            with(target)
+            {
+                instance_destroy();
+            }
+            if (EnemyDistance &lt; PanicDistance)
+            {
+                state = "panic start";
+                exit;
+            }
+            else
+            {
+                spd = MaxSpd;
+                acc = MaxAcc;
+                target = obj_Player;
+                state = "follow";
+            }
+        }
+        dist = 0;
+    break;
+    case "food":
+        dist = 0;
+    break;
+}
 
+var point_x, point_y;
+
+if(mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true))
+{
+    point_x = path_get_point_x(path,1);
+    point_y = path_get_point_y(path,1);
+    if(point_distance(target.x,target.y,x,y) &gt; dist)
+    {
+        moveTarget_x = point_x;
+        moveTarget_y = point_y;
+    }
+    else if (point_distance(target.x,target.y,x,y) &lt; dist/2 )
+    {
+        moveTarget_x = x + lengthdir_x(dist,point_direction(target.x, target.y, x, y));
+        moveTarget_y = y + lengthdir_y(dist,point_direction(target.x, target.y, x, y));
+    }
+    else
+    {
+        moveTarget_x = x;
+        moveTarget_y = y;
+    }
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Food">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>state = "panic start";
+with(other)
+{
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -120,15 +328,11 @@ for ( j = 0; j &lt; 360; j += raydensity)
           <argument>
             <kind>1</kind>
             <string>/// Raycast
-var  i, j, k, hit;
-hit = -999;
-if(!instance_exists(food)){ food = -999; }
 
-draw_set_colour("red");
 
 for ( j = 0; j &lt; 360; j += raydensity)
 {
-    for (i = raymin; i &lt; raylength; i++)
+    for (i = raymin; i &lt; raylength; i+=5)
     {
         ray_x = self.x + lengthdir_x(i,j)
         ray_y = self.y + lengthdir_y(i,j)
@@ -136,42 +340,35 @@ for ( j = 0; j &lt; 360; j += raydensity)
         {
             draw_point(ray_x, ray_y);
         }
-        else
-        { 
-            if (food &lt; 0)
-            {
-                hit = collision_line(self.x,self.y,ray_x,ray_y,obj_Food,false,true);
-            }
-            else if (sqrt(food.x^^2 + food.y^^2) &gt; sqrt(ray_x^^2 + ray_y^^2))
-            {
-                hit = collision_line(self.x,self.y,ray_x,ray_y,obj_Food,false,true);
-            }
-            if (hit &gt; 0) { food = hit; }
-
-            break;
-        }
+        else { break; }
     }    
 }
 
-draw_text(1600,40,"Targeting nom nom " + string(food));
-draw_self();
 
+draw_set_colour(c_aqua);
+draw_path(path,x,y,true);
+draw_set_colour(c_red);
+draw_line(x,y,x + (moveTarget_x-x)*5,y + (moveTarget_y-y)*5);
+draw_self();
 </string>
           </argument>
         </arguments>
       </action>
     </event>
   </events>
-  <PhysicsObject>0</PhysicsObject>
+  <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
   <PhysicsObjectDensity>0.5</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
-  <PhysicsObjectLinearDamping>0.100000001490116</PhysicsObjectLinearDamping>
+  <PhysicsObjectLinearDamping>2</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>0.100000001490116</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
+  <PhysicsObjectFriction>0.100000001490116</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
-  <PhysicsShapePoints/>
+  <PhysicsShapePoints>
+    <point>24,44</point>
+    <point>24,32</point>
+  </PhysicsShapePoints>
 </object>
