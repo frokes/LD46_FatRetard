@@ -47,9 +47,16 @@
             <kind>1</kind>
             <string>/// Target Speed 
 
-mvspd_x = clamp(moveTarget_x - x,-1,1);
-mvspd_y = clamp(moveTarget_y - y,-1,1);
-
+if(isPlayer)
+{
+    mvspd_x = keyboard_check(ord("D")) - keyboard_check(ord("A"));
+    mvspd_y = keyboard_check(ord("S")) - keyboard_check(ord("W"));
+}
+else
+{
+    mvspd_x = clamp(moveTarget_x - x,-1,1);
+    mvspd_y = clamp(moveTarget_y - y,-1,1);
+}
 </string>
           </argument>
         </arguments>

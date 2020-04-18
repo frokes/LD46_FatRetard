@@ -77,6 +77,8 @@ alarm[0] = 30;
 invurn = false;
 
 path = path_add();
+
+isPlayer = false;
 </string>
           </argument>
         </arguments>
@@ -282,8 +284,6 @@ if(mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true))
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="4" ename="obj_Food">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -300,10 +300,43 @@ if(mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>state = "panic start";
-with(other)
+            <string>/// Call inherited events
+
+event_inherited();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Enemy">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(state != "panic")
 {
-    instance_destroy();
+    HP--;
+    state = "panic start";
+}
+else
+{
+    with(target)
+    {
+        instance_destroy();
+    }
+    state = "panic start";
 }
 </string>
           </argument>
