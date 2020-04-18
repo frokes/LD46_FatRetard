@@ -27,7 +27,8 @@
             <kind>1</kind>
             <string>/// Object variables
 global.NavRes = 32;
-refreshrate = 30;
+refreshrate = 15;
+alarm[0] = refreshrate;
 </string>
           </argument>
         </arguments>
@@ -76,11 +77,11 @@ global.NavMesh = mp_grid_create(0,0,nh,nw,global.NavRes,global.NavRes);
           <argument>
             <kind>1</kind>
             <string>/// Debug NavMesh
-/*
+
 draw_set_alpha(0.1);
 mp_grid_draw(global.NavMesh);
 draw_set_alpha(1);
-*/
+
 </string>
           </argument>
         </arguments>
