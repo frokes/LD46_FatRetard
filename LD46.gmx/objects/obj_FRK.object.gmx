@@ -37,7 +37,7 @@ raydensity = 5;
 
 HP = 3;
 invurnTime = 90;
-PanicDistance = 600;
+PanicDistance = 700;
 state = "follow";
 </string>
           </argument>
@@ -64,12 +64,6 @@ state = "follow";
 target = -999;
 food = -999;
 
-moveTarget_x = x;
-moveTarget_y = y;
-
-mvspd_x = 0;
-mvspd_y = 0;
-
 acc = MaxAcc;
 spd = MaxSpd;
 alarm[0] = 30;
@@ -79,28 +73,8 @@ invurn = false;
 path = path_add();
 
 isPlayer = false;
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Physics Init   
-phy_fixed_rotation = true;
+
+event_inherited();
 </string>
           </argument>
         </arguments>
@@ -325,7 +299,8 @@ event_inherited();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(state != "panic")
+            <string>/// Take dmg and panic
+if(state != "panic")
 {
     HP--;
     state = "panic start";
@@ -337,6 +312,11 @@ else
         instance_destroy();
     }
     state = "panic start";
+}
+with(other)
+{
+    Stun = true;
+    alarm[0] = 30;
 }
 </string>
           </argument>
@@ -361,8 +341,6 @@ else
           <argument>
             <kind>1</kind>
             <string>/// Raycast
-
-
 for ( j = 0; j &lt; 360; j += raydensity)
 {
     for (i = raymin; i &lt; raylength; i+=5)
@@ -379,6 +357,7 @@ for ( j = 0; j &lt; 360; j += raydensity)
 
 
 draw_set_colour(c_aqua);
+draw_circle(x,y,PanicDistance,true);
 draw_path(path,x,y,true);
 draw_set_colour(c_red);
 draw_line(x,y,x + (moveTarget_x-x)*5,y + (moveTarget_y-y)*5);
