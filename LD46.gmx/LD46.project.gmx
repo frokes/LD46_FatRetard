@@ -10,6 +10,7 @@
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_FRK</sprite>
     <sprite>sprites\spr_Food</sprite>
+    <sprite>sprites\spr_Enemy</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -18,6 +19,9 @@
     <object>objects\obj_Wall</object>
     <object>objects\obj_FRK</object>
     <object>objects\obj_Food</object>
+    <object>objects\obj_Enemy</object>
+    <object>objects\obj_NavMesh</object>
+    <object>objects\obj_Collider</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>
