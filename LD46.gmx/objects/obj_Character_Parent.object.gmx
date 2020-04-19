@@ -418,7 +418,7 @@ if(!invurn)
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_Character">
+    <event eventtype="4" ename="obj_Character_Parent">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -441,7 +441,7 @@ if(!invurn)
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_Wall">
+    <event eventtype="4" ename="obj_Wall_Parent">
       <action>
         <libid>1</libid>
         <id>603</id>
