@@ -277,6 +277,28 @@ if(HP &lt;= 0){ instance_destroy(); }
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Z Depth calculation
+//depth = obj_Player.y - y;
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="4" ename="obj_Freeze">
       <action>
@@ -466,7 +488,30 @@ for (i = 0; i &lt; HP; i++)
     var offset = HeartSpacing*(HP-1) / 2
     draw_sprite(spr_heart,-1,x - offset + i*HeartSpacing,y-HeartHeight);
 }
-draw_self();
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self();
 </string>
           </argument>
         </arguments>
