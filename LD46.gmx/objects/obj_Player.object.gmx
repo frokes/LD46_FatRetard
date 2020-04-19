@@ -28,7 +28,7 @@
             <string>/// Initialise Object variables
 event_inherited();
 
-spd = 20;
+MaxSpd = 20;
 acc = 500;
 HP = 3;
 
@@ -67,7 +67,7 @@ image_speed = 0;
             <string>/// Initialise helper variables
 
 isPlayer = true;
-
+spd = MaxSpd;
 powerup = round(random_range(1,3));
 
 rdyfire = true;
@@ -168,8 +168,6 @@ game_restart();
 
 var offset_x, offset_y;
 var parts = 25;
-
-image_index = facing-1;
 
 if(keyboard_check(ord("R")))
 {

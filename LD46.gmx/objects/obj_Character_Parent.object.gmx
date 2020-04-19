@@ -31,6 +31,11 @@ stun = false;
 invurn = false;
 slowed = false;
 
+animCycle = 4;
+animMult = 3;
+frametime = animMult;
+lastframe = 0;
+
 HP = 3;
 HeartSpacing = 18;
 HeartHeight = 45
@@ -42,11 +47,14 @@ moveTarget_y = y;
 mvspd_x = 0;
 mvspd_y = 0;
 
+MaxSpd = 10;
+
 fric = 50;
 
 facing = 3;
 
 phy_fixed_rotation = true;
+image_speed = 0.3;
 </string>
           </argument>
         </arguments>
@@ -303,8 +311,6 @@ if(HP &lt;= 0){ instance_destroy(); }
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="4" ename="obj_Fire">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -321,12 +327,12 @@ if(HP &lt;= 0){ instance_destroy(); }
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Take dmg and activate invurn
-if(!invurn)
+            <string>if(phy_speed &gt; 0)
 {
-    HP -= 1;
-    invurn = true;
-    alarm[1] = 15;
+    if((mvspd_x &gt; 0 &amp;&amp; facing != 1) || (mvspd_x &lt; 0 &amp;&amp; facing != 3) || (mvspd_y &lt; 0 &amp;&amp; facing != 2) || (mvspd_y &gt; 0 &amp;&amp; facing != 4) || (image_index mod animCycle == 0))
+    {
+        image_index = animCycle * facing-1; 
+    }
 }
 </string>
           </argument>
@@ -388,6 +394,35 @@ if(!invurn)
 with(other)
 {
     instance_destroy();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Fire">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Take dmg and activate invurn
+if(!invurn)
+{
+    HP -= 1;
+    invurn = true;
+    alarm[1] = 15;
 }
 </string>
           </argument>
