@@ -28,7 +28,7 @@
             <string>/// Object variables
 alarm[0] = random_range(5,25);
 
-ProjSpd = random_range(40,80);
+ProjSpd = random_range(60,120);
 
 fric = 5;
 rnd = random_range(0.25,1);

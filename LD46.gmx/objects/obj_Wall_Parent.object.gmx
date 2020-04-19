@@ -47,7 +47,7 @@ radius = 2000;
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -65,11 +65,13 @@ radius = 2000;
           <argument>
             <kind>1</kind>
             <string>/// Z Depth calculation
-depth = obj_Player.y - y - 32;
+depth = obj_Player.y + y - 32;
 </string>
           </argument>
         </arguments>
       </action>
+    </event>
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -86,7 +88,7 @@ depth = obj_Player.y - y - 32;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Calculate shadows 
+            <string>/// Calculate shadows for player
 len = 2000;
 
 if (distance_to_point(global.emitter_x,global.emitter_y) &lt; radius)
@@ -118,8 +120,8 @@ if (distance_to_point(global.emitter_x,global.emitter_y) &lt; radius)
     y41 = y4+lengthdir_y(len,dirc);
     
     draw_primitive_begin(pr_trianglestrip);
-    draw_set_colour(c_white);
-    draw_set_blend_mode_ext(bm_src_alpha, bm_add);
+    draw_set_colour(c_ltgray);
+    draw_set_blend_mode(bm_normal);
     draw_set_alpha(1);
     draw_vertex(x1,y1);
     draw_vertex(x11,y11);

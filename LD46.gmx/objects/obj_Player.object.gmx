@@ -42,7 +42,7 @@ spawn_y = 40;
 
 HeartHeight = 110;
 
-off_y = -20;
+off_y = -40;
 image_speed = 0;
 </string>
           </argument>
@@ -68,7 +68,7 @@ image_speed = 0;
 
 isPlayer = true;
 
-powerup = 3;
+powerup = round(random_range(1,3));
 
 rdyfire = true;
 
@@ -95,8 +95,9 @@ rdyfire = true;
           <argument>
             <kind>1</kind>
             <string>/// End game
+surface_reset_target();
 show_message("Game Over!");
-game_end();
+game_restart();
 </string>
           </argument>
         </arguments>
@@ -163,7 +164,8 @@ game_end();
           <argument>
             <kind>1</kind>
             <string>/// Get input and activate attacks
-show_debug_message(powerup);
+
+
 var offset_x, offset_y;
 var parts = 25;
 
@@ -242,19 +244,7 @@ if(keyboard_check(vk_space) &amp;&amp; rdyfire)
                 }
             }
             // Define particle systems
-            /*partsys = part_system_create();
-            part_system_depth(partsys,-1);
-
-            // freeze cone      
-            snow = part_type_create();
-            part_type_shape(snow,pt_shape_cloud);
-            part_type_orientation(snow,0,360,random_range(-5,5),0,0);
-            part_type_size(snow,0.2,0.3,0.04,0.01);
-            part_type_speed(snow,20,40,-0.5,0);
-            part_type_direction(snow,facing * -90 +90 -15, facing * +90 -90 +15,0,0);
-            part_type_life(snow,5,12);
-            
-            part_particles_create(partsys,x + offset_x,y +offset_y,snow,parts*4);*/
+            /**/
         break;
         
     }

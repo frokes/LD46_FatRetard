@@ -63,7 +63,7 @@ boy6 = -28;   // 19
           <argument>
             <kind>1</kind>
             <string>/// Z Depth calculation
-depth = obj_Player.y - y - 32;
+depth = obj_Player.y + y - 32;
 </string>
           </argument>
         </arguments>
@@ -127,8 +127,8 @@ if (distance_to_point(global.emitter_x,global.emitter_y) &lt; radius)
     y61 = y6+lengthdir_y(len,dirc);
     
     draw_primitive_begin(pr_trianglestrip);
-    draw_set_colour(c_white);
-    draw_set_blend_mode_ext(bm_src_alpha, bm_add);
+    draw_set_colour(c_ltgray);
+    draw_set_blend_mode(bm_normal);
     draw_set_alpha(1);
     draw_vertex(x1,y1);
     draw_vertex(x11,y11);

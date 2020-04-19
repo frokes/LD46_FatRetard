@@ -21,6 +21,7 @@
     <sprite>sprites\spr_ice</sprite>
     <sprite>sprites\spr_wall_w_door</sprite>
     <sprite>sprites\spr_light</sprite>
+    <sprite>sprites\spr_light_small</sprite>
     <sprite>sprites\spr_wall_hor</sprite>
     <sprite>sprites\spr_wall_hor_door</sprite>
     <sprite>sprites\spr_wall_vert</sprite>
@@ -29,10 +30,12 @@
     <sprite>sprites\spr_spider_cute</sprite>
     <sprite>sprites\spr_spider_blue</sprite>
     <sprite>sprites\spr_spider_charged</sprite>
+    <sprite>sprites\spr_fire</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\bkg_tiles</background>
+  </backgrounds>
   <paths name="paths"/>
-  <scripts name="scripts"/>
   <objects name="objects">
     <object>objects\obj_Wall_Parent</object>
     <object>objects\obj_Character_Parent</object>
@@ -54,6 +57,7 @@
     <objects name="Attacks">
       <object>objects\obj_Projectile</object>
       <object>objects\obj_lightning</object>
+      <object>objects\obj_Fire</object>
       <object>objects\obj_Flame</object>
       <object>objects\obj_Freeze</object>
     </objects>

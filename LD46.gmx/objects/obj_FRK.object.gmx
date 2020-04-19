@@ -73,6 +73,8 @@ alarm[3] = 30;
 path = path_add();
 
 isPlayer = false;
+
+powerup = 0;
 </string>
           </argument>
         </arguments>
@@ -96,8 +98,32 @@ isPlayer = false;
           <argument>
             <kind>1</kind>
             <string>/// End game
+surface_reset_target();
 show_message("Game Over!");
-game_end();
+game_restart();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="7">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>powerup = 0;
 </string>
           </argument>
         </arguments>
@@ -213,7 +239,6 @@ alarm[3] = 30;
             <kind>1</kind>
             <string>/// Switch on state
 var dist, flag_x, flag_y, Enemy, EnemyDistance;
-show_debug_message(state);
 if(!instance_exists(target)){target = obj_Player}
 switch(state)
 {
@@ -233,8 +258,6 @@ switch(state)
         target = instance_create(flag_x, flag_y, obj_Flag);
         dist = 0;
         state = "panic";
-        spd = 25;
-        acc = 500;
     break;
     case "panic":
         if(instance_exists(obj_Enemy))
@@ -259,8 +282,6 @@ switch(state)
             }
             else
             {
-                spd = MaxSpd;
-                acc = MaxAcc;
                 target = obj_Player;
                 state = "follow";
             }
@@ -315,9 +336,161 @@ if(mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true))
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Decide speed from state and powerup
+var spd_1, spd_2;
+spd_1 = 1;
+spd_2 = 1;
+spd_3 = 1;
+
+if (state == "panic") { spd_1 = 3; } 
+if (powerup == 2) { spd_2 = 2; }
+if (slowed) { spd_3 = 0.5; }
+spd = MaxSpd * spd_1 * spd_2 * spd_3;
+acc = MaxAcc * spd_1 * spd_2 * spd_3;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Spawn fires if poweredup
+if(powerup == 1)
+{   
+    if(state != "panic")
+    {
+        state = "panic start";
+    }
+    nearestFire = instance_nearest(x,y,obj_Fire);
+    
+    if(nearestFire != noone)
+    {
+        show_debug_message(string(distance_to_point(nearestFire.x, nearestFire.y)));
+        if(distance_to_point(nearestFire.x, nearestFire.y) &gt; 16)
+        {
+            instance_create(x,y,obj_Fire);
+        }
+    }
+    else
+    {
+        instance_create(x,y,obj_Fire);
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Spawn sparks if lightning powerup
+if(powerup == 2)
+{   
+    if(state != "panic")
+    {
+        state = "panic start";
+        partsys = part_system_create();
+        part_system_depth(partsys,-1);
+    
+        sparks = part_type_create();
+        part_type_shape(sparks,pt_shape_spark);
+        part_type_colour_hsv(sparks,130,140,100,200,235,255);
+        part_type_orientation(sparks,0,360,random_range(-5,5),0.5,true);
+        part_type_size(sparks,0.2,0.5,-0.01,0.01);
+        part_type_speed(sparks,15,20,-0.5,0.1);
+        part_type_direction(sparks,0, 360,0,1);
+        part_type_life(sparks,3,6);
+        part_type_gravity(sparks,5,270);
+            
+        part_particles_create(partsys,x,y,sparks,15*4);
+    }
+    partsys = part_system_create();
+    part_system_depth(partsys,-1);
+    
+    sparks = part_type_create();
+    part_type_shape(sparks,pt_shape_spark);
+    part_type_colour_hsv(sparks,130,140,100,200,235,255);
+    part_type_orientation(sparks,0,360,random_range(-5,5),5,true);
+    part_type_size(sparks,0.1,0.2,-0.01,0.5);
+    part_type_speed(sparks,5,25,-0.5,0.5);
+    part_type_direction(sparks,0, 360,0,25);
+    part_type_life(sparks,3,7);
+    part_type_gravity(sparks,5,270);
+            
+    part_particles_create(partsys,x,y,sparks,5*4);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Call inherited events
 
 event_inherited();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_Fire">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Don't die from this
 </string>
           </argument>
         </arguments>
@@ -341,11 +514,14 @@ event_inherited();
           <argument>
             <kind>1</kind>
             <string>/// Take dmg and panic
-if(state != "panic")
+if(!invurn)
 {
     HP--;
     invurn = true;
     alarm[1] = 30;
+}
+if(state != "panic")
+{
     state = "panic start";
 }
 else

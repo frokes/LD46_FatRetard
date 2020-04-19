@@ -54,7 +54,8 @@ image_index = powerup;
             <string>/// Set powerup on collider
 with(other)
 {
-    powerup = other.powerup;
+    powerup = other.powerup + 1;
+    alarm[7] = 150;
 }
 
 instance_destroy();

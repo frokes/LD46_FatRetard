@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Inherited variables
+randomize();
 stun = false;
 invurn = false;
 slowed = false;
@@ -69,6 +70,7 @@ phy_fixed_rotation = true;
           <argument>
             <kind>1</kind>
             <string>slowed = false;
+image_blend = c_white;
 </string>
           </argument>
         </arguments>
@@ -115,6 +117,30 @@ phy_fixed_rotation = true;
           <argument>
             <kind>1</kind>
             <string>stun = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Z Depth calculation
+depth = obj_Player.y - y;
 </string>
           </argument>
         </arguments>
@@ -277,6 +303,8 @@ if(HP &lt;= 0){ instance_destroy(); }
           </argument>
         </arguments>
       </action>
+    </event>
+    <event eventtype="4" ename="obj_Fire">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -293,8 +321,13 @@ if(HP &lt;= 0){ instance_destroy(); }
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Z Depth calculation
-depth = obj_Player.y - y;
+            <string>/// Take dmg and activate invurn
+if(!invurn)
+{
+    HP -= 1;
+    invurn = true;
+    alarm[1] = 15;
+}
 </string>
           </argument>
         </arguments>
@@ -321,6 +354,7 @@ depth = obj_Player.y - y;
 {
     slowed = true;
     alarm[2] = 150;
+    image_blend = c_aqua; 
 }
 </string>
           </argument>
@@ -483,6 +517,7 @@ if(!invurn)
             <kind>1</kind>
             <string>/// Draw self
 draw_self();
+draw_set_colour(c_white);
 </string>
           </argument>
         </arguments>
