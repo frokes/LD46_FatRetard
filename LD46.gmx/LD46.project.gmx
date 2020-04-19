@@ -4,7 +4,15 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\snd_fire</sound>
+    <sound>sound\snd_ice</sound>
+    <sound>sound\snd_lightning</sound>
+    <sound>sound\snd_throw</sound>
+    <sound>sound\snd_alert</sound>
+    <sound>sound\snd_spider_death</sound>
+    <sound>sound\snd_spider_walk</sound>
+  </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_Player</sprite>
     <sprite>sprites\spr_Wall</sprite>

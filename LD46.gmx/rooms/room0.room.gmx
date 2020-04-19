@@ -98,6 +98,9 @@
     <instance objName="obj_Food" x="864" y="1776" name="inst_6B2BF92D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Food" x="672" y="1392" name="inst_C6C89DC1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_Fire" x="432" y="1872" name="inst_4711414D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_spider_pink" x="720" y="1728" name="inst_436A6FA6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_spider_pink" x="1032" y="1680" name="inst_C972CE93" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_spider_pink" x="864" y="1248" name="inst_C3EBF8E6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="bkg_tiles" x="24" y="1392" w="96" h="96" xo="0" yo="0" id="10000006" name="inst_6A6088ED" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

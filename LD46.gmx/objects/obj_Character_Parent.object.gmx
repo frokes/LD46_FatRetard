@@ -55,6 +55,10 @@ facing = 3;
 
 phy_fixed_rotation = true;
 image_speed = 0.3;
+
+// Audio emitter creation
+SoundEmitter = audio_emitter_create();
+pitch = random_range(-0.5,0.5);
 </string>
           </argument>
         </arguments>
@@ -327,13 +331,37 @@ if(HP &lt;= 0){ instance_destroy(); }
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(phy_speed &gt; 0)
+            <string>/// Update animation
+if(phy_speed &gt; 0)
 {
     if((mvspd_x &gt; 0 &amp;&amp; facing != 1) || (mvspd_x &lt; 0 &amp;&amp; facing != 3) || (mvspd_y &lt; 0 &amp;&amp; facing != 2) || (mvspd_y &gt; 0 &amp;&amp; facing != 4) || (image_index mod animCycle == 0))
     {
         image_index = animCycle * facing-1; 
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update sound emitter location
+audio_emitter_position(SoundEmitter,x,y,0);
+audio_emitter_velocity(SoundEmitter,phy_speed_x,phy_speed_y,0);
 </string>
           </argument>
         </arguments>
