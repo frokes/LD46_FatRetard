@@ -27,6 +27,7 @@
     <sprite>sprites\spr_wall_vert_lower</sprite>
     <sprite>sprites\spr_wall_vert_upper</sprite>
     <sprite>sprites\spr_spider_cute</sprite>
+    <sprite>sprites\spr_spider_blue</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -44,7 +45,8 @@
     <objects name="Characters">
       <object>objects\obj_Player</object>
       <object>objects\obj_FRK</object>
-      <object>objects\obj_Enemy</object>
+      <object>objects\obj_spider_pink</object>
+      <object>objects\obj_spider_blue</object>
     </objects>
     <objects name="Attacks">
       <object>objects\obj_Projectile</object>

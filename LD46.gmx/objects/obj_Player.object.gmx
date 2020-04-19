@@ -42,7 +42,7 @@ spawn_y = 40;
 
 HeartHeight = 110;
 
-
+off_y = -20;
 image_speed = 0;
 </string>
           </argument>
@@ -180,7 +180,7 @@ if(keyboard_check(vk_space) &amp;&amp; rdyfire)
     {
         case 1:
             offset_x = spawn_x;
-            offset_y = offset_y;
+            offset_y = off_y;
             
         break;
         case 2:
@@ -189,7 +189,7 @@ if(keyboard_check(vk_space) &amp;&amp; rdyfire)
         break;
         case 3:
             offset_x = -spawn_x;
-            offset_y = offset_y;
+            offset_y = off_y;
         break;
         case 4:
             offset_x = 0;
@@ -381,7 +381,7 @@ event_inherited();
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_Enemy">
+    <event eventtype="4" ename="obj_spider_pink">
       <action>
         <libid>1</libid>
         <id>603</id>
