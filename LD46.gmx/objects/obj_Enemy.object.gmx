@@ -34,7 +34,7 @@ acc = 300;
 turnRate = 500;
 turnAcc = 100;
 
-image_speed = 0.5;
+image_speed = 0.3;
 
 target = obj_FRK;
 
