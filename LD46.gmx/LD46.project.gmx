@@ -26,6 +26,7 @@
     <sprite>sprites\spr_wall_vert</sprite>
     <sprite>sprites\spr_wall_vert_lower</sprite>
     <sprite>sprites\spr_wall_vert_upper</sprite>
+    <sprite>sprites\spr_spider_cute</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>

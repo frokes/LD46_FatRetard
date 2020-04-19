@@ -88,6 +88,7 @@ depth = obj_Player.y - y - 32;
             <kind>1</kind>
             <string>/// Calculate shadows 
 len = 2000;
+
 if (distance_to_point(global.emitter_x,global.emitter_y) &lt; radius)
 {
     x1 = x - bwx/2 * image_xscale + box;

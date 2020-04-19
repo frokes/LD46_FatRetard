@@ -25,9 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.shadows = surface_create(1920,1080);
+            <string>shadowX = room_width;
+
+shadowY = room_height;
+
+global.shadows = surface_create(shadowX, shadowY);
 global.emitter_x = obj_Player.x;
 global.emitter_y = obj_Player.y - 32;
+
 
 </string>
           </argument>
@@ -75,7 +80,7 @@ global.emitter_y = obj_Player.y - 32;
           <argument>
             <kind>1</kind>
             <string>surface_free(global.shadows);
-global.shadows = surface_create(1920,1080);
+global.shadows = surface_create(shadowX, shadowY);
 surface_set_target(global.shadows);
 
 draw_sprite(spr_light,-1,global.emitter_x,global.emitter_y);
