@@ -332,13 +332,14 @@ if(HP &lt;= 0){ instance_destroy(); }
           <argument>
             <kind>1</kind>
             <string>/// Update animation
-if(phy_speed &gt; 0)
-{
+//if(phy_speed &gt; 0)
+//{
+
     if((mvspd_x &gt; 0 &amp;&amp; facing != 1) || (mvspd_x &lt; 0 &amp;&amp; facing != 3) || (mvspd_y &lt; 0 &amp;&amp; facing != 2) || (mvspd_y &gt; 0 &amp;&amp; facing != 4) || (image_index mod animCycle == 0))
     {
         image_index = animCycle * facing-1; 
     }
-}
+//}
 </string>
           </argument>
         </arguments>

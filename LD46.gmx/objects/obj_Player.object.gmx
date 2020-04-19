@@ -258,7 +258,8 @@ if(keyboard_check(vk_space) &amp;&amp; rdyfire)
     alarm[5] = 20;
     rdyfire = false;
 }
-
+show_debug_message(string(mvspd_x));
+show_debug_message(string(facing));
 </string>
           </argument>
         </arguments>

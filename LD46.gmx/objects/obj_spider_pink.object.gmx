@@ -153,8 +153,8 @@ if(mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true))
             <string>/// Play audio
 if(phy_speed &gt; 0)
 {
-    audio_emitter_gain(SoundEmitter,MaxSpd/phy_speed);
-    audio_emitter_pitch(SoundEmitter,0.5 + phy_speed/(MaxSpd*2));
+    audio_emitter_gain(SoundEmitter,phy_speed/MaxSpd);
+    audio_emitter_pitch(SoundEmitter,clamp(0.5 + 0.5*(phy_speed/MaxSpd),0.75,1.2));
 }
 
 </string>
