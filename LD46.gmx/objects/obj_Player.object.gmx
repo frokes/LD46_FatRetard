@@ -189,7 +189,7 @@ if(keyboard_check(vk_space) &amp;&amp; rdyfire)
         break;
         case 3:
             offset_x = -spawn_x;
-            offset_y = off_y;
+            offset_y = off_y
         break;
         case 4:
             offset_x = 0;
@@ -202,7 +202,8 @@ if(keyboard_check(vk_space) &amp;&amp; rdyfire)
             Projectile = instance_create(x + offset_x, y + offset_y, obj_Projectile);
             with(Projectile)
             {
-                physics_apply_local_impulse(0,0,clamp(offset_x,-1,1) * ProjSpd, clamp(offset_y,-1,1) * ProjSpd);
+                phy_rotation = other.facing * -90 +90 ;
+                physics_apply_local_impulse(0,0,ProjSpd, 0);
             }
         break;
         
@@ -257,7 +258,7 @@ if(keyboard_check(vk_space) &amp;&amp; rdyfire)
         break;
         
     }
-    alarm[5] = 30;
+    alarm[5] = 20;
     rdyfire = false;
 }
 
