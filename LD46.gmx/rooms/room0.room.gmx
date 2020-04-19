@@ -95,6 +95,8 @@
     <instance objName="obj_wall_hor" x="456" y="1296" name="inst_4413CD49" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_vert_upper" x="480" y="1296" name="inst_16A49410" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_spider_pink" x="936" y="1632" name="inst_F3BD82EE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_spider_charged" x="816" y="1584" name="inst_4C70A09A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_spider_blue" x="984" y="1488" name="inst_50C8C0EE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>-1</PhysicsWorld>

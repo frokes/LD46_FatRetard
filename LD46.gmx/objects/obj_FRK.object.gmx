@@ -323,7 +323,7 @@ event_inherited();
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_spider_pink">
+    <event eventtype="4" ename="obj_Enemy">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -407,7 +407,7 @@ draw_set_colour(c_red);
 draw_line(x,y,x + (moveTarget_x-x)*5,y + (moveTarget_y-y)*5);
 */
 draw_self();
-
+event_inherited();
 </string>
           </argument>
         </arguments>

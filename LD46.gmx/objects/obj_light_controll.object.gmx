@@ -33,7 +33,7 @@ global.shadows = surface_create(shadowX, shadowY);
 global.emitter_x = obj_Player.x;
 global.emitter_y = obj_Player.y - 32;
 
-
+debug_noshadows = false;
 </string>
           </argument>
         </arguments>
@@ -93,6 +93,32 @@ global.emitter_y = obj_Player.y - 32;
         </arguments>
       </action>
     </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(keyboard_check_pressed(ord("L")))
+{
+    debug_noshadows = 1 - debug_noshadows;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="73">
       <action>
         <libid>1</libid>
@@ -110,10 +136,13 @@ global.emitter_y = obj_Player.y - 32;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_blend_mode(bm_subtract);
+            <string>if(!debug_noshadows)
+{
+draw_set_blend_mode(bm_subtract);
 draw_surface(global.shadows,0,0);
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
+}
 </string>
           </argument>
         </arguments>
