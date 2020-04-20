@@ -28,7 +28,7 @@
             <string>/// Object variables
 event_inherited();
 
-MaxSpd = 20;
+MaxSpd = 15;
 MaxAcc = 300;
 
 turnRate = 500;
@@ -89,8 +89,10 @@ walksound = audio_play_sound_on(SoundEmitter,snd_spider_walk,true,1);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>audio_emitter_free(SoundEmitter);
+            <string>audio_emitter_gain(SoundEmitter,0);
+audio_emitter_free(SoundEmitter);
 audio_play_sound_at(snd_spider_death,x,y,0,400,1000,1,false,1);
+instance_create(x,y,obj_PowerupFire);
 </string>
           </argument>
         </arguments>
@@ -116,8 +118,9 @@ audio_play_sound_at(snd_spider_death,x,y,0,400,1000,1,false,1);
             <string>/// Play audio
 if(phy_speed &gt; 0)
 {
-    audio_emitter_gain(SoundEmitter,phy_speed/MaxSpd);
+    audio_emitter_gain(SoundEmitter,clamp((1000-distance_to_object(obj_Player))/1000,0,1));
     audio_emitter_pitch(SoundEmitter,clamp(0.5 + 0.5*(phy_speed/MaxSpd),0.75,1.2));
+    
 }
 
 </string>

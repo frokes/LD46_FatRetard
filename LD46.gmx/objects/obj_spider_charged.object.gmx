@@ -28,7 +28,7 @@
             <string>/// Object variables
 event_inherited();
 
-MaxSpd = 25;
+MaxSpd = 30;
 MaxAcc = 500;
 
 turnRate = 500;
@@ -36,9 +36,12 @@ turnAcc = 100;
 
 image_speed = 0.3;
 
-target = obj_FRK;
+HP = 4;
 
-HP = 2;
+walksound = audio_play_sound_on(SoundEmitter,snd_spider_walk,false,1);
+
+doesRaycast = true;
+raylenght = 1000;
 </string>
           </argument>
         </arguments>
@@ -63,12 +66,13 @@ HP = 2;
 
 isPlayer = false;
 
+walksound = audio_play_sound_on(SoundEmitter,snd_spider_walk,true,1);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="1">
+    <event eventtype="1" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -85,30 +89,10 @@ isPlayer = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>invurn = false;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>stun = false;
+            <string>audio_emitter_gain(SoundEmitter,0);
+audio_emitter_free(SoundEmitter);
+audio_play_sound_at(snd_spider_death,x,y,0,400,1000,1,false,1);
+instance_create(x,y,obj_PowerupLightning);
 </string>
           </argument>
         </arguments>
@@ -131,22 +115,11 @@ isPlayer = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Calculate path to player and set moveTarget
-var path = path_add();
-if(mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true))
+            <string>/// Play audio
+if(phy_speed &gt; 0)
 {
-    moveTarget_x = path_get_point_x(path,1);
-    moveTarget_y = path_get_point_y(path,1);
-    if(path_get_length(path) &gt; 2)
-    {
-        lookTarget_x = path_get_point_x(path,2);
-        lookTarget_y = path_get_point_y(path,2);
-    }
-    else
-    {
-        lookTarget_x = moveTarget_x;
-        lookTarget_y = moveTarget_y;
-    }
+    audio_emitter_gain(SoundEmitter,phy_speed/MaxSpd);
+    audio_emitter_pitch(SoundEmitter,clamp(0.5 + 0.5*(phy_speed/MaxSpd),0.75,1.2));
 }
 
 </string>
@@ -232,7 +205,7 @@ event_inherited();
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
-  <PhysicsObjectDensity>0.400000005960464</PhysicsObjectDensity>
+  <PhysicsObjectDensity>0.5</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>2</PhysicsObjectLinearDamping>

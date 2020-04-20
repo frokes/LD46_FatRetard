@@ -93,15 +93,15 @@ len = 2000;
 
 if (distance_to_point(global.emitter_x,global.emitter_y) &lt; radius)
 {
-    x1 = x - bwx/2 * image_xscale + box - view_xview;
-    x2 = x + bwx/2 * image_xscale + box - view_xview;
-    x3 = x + bwx/2 * image_xscale + box - view_xview;
-    x4 = x - bwx/2 * image_xscale + box - view_xview;
+    x1 = x - bwx/2 + box * image_xscale - global.emit_off_x;
+    x2 = x + bwx/2 + box * image_xscale - global.emit_off_x;
+    x3 = x + bwx/2 + box * image_xscale - global.emit_off_x;
+    x4 = x - bwx/2 + box * image_xscale - global.emit_off_x;
     
-    y1 = y - bwy/2 + boy - view_yview;
-    y2 = y - bwy/2 + boy - view_yview;
-    y3 = y + bwy/2 + boy - view_yview;
-    y4 = y + bwy/2 + boy - view_yview;
+    y1 = y - bwy/2 + boy - global.emit_off_y;
+    y2 = y - bwy/2 + boy - global.emit_off_y;
+    y3 = y + bwy/2 + boy - global.emit_off_y;
+    y4 = y + bwy/2 + boy - global.emit_off_y;
     
     dirc = point_direction(global.emitter_x,global.emitter_y,x1,y1);
     x11 = x1+lengthdir_x(len,dirc);
@@ -120,7 +120,7 @@ if (distance_to_point(global.emitter_x,global.emitter_y) &lt; radius)
     y41 = y4+lengthdir_y(len,dirc);
     
     draw_primitive_begin(pr_trianglestrip);
-    draw_set_colour(c_ltgray);
+    draw_set_colour(global.shdwColor);
     draw_set_blend_mode(bm_normal);
     draw_set_alpha(1);
     draw_vertex(x1,y1);

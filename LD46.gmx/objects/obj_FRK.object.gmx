@@ -28,14 +28,14 @@
             <string>/// Object variables
 event_inherited();
 
-MaxSpd = 10;
-MaxAcc = 250;
+MaxSpd = 30;
+MaxAcc = 300;
 turnAcc = 3;
 turnSpd = 500;
 
-raylength = 500;
+raylength = 1000;
 raymin = 45;
-raydensity = 5;
+raydensity = 15;
 
 HP = 3;
 invurnTime = 90;
@@ -100,7 +100,7 @@ powerup = 0;
             <string>/// End game
 surface_reset_target();
 show_message("Game Over!");
-game_restart();
+room_restart();
 </string>
           </argument>
         </arguments>
@@ -166,35 +166,12 @@ for ( j = 0; j &lt; 360; j += raydensity)
             {
                 hit = collision_line(self.x,self.y,ray_x,ray_y,obj_Food,false,true);
             }
-            if (hit &gt; 0 ) { food = hit; state = "food"; target = food;}
+            if (hit &gt; 0 ) { food = hit; state = "food"; target = food; audio_play_sound_at(snd_alert,x,y,0,100,500,1,false,1)}
             break;
         }
     }    
 }
 alarm[3] = 30;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="1">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>invurn = false;
 </string>
           </argument>
         </arguments>
@@ -237,7 +214,111 @@ alarm[3] = 30;
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Switch on state
+var dist, flag_x, flag_y, Enemy, EnemyDistance,counter;
+if(!instance_exists(target)){target = obj_Player}
+//if(target = obj_Player){ state = "follow"; }
+
+switch(state)
+{
+    case "follow":
+        target = obj_Player;
+        dist = 150;
+    break;
+    case "panic start":
+        
+        flag_x = random_range(0, room_width/global.NavRes)*global.NavRes;
+        flag_y = random_range(0, room_height/global.NavRes)*global.NavRes;
+        counter = 0;
+        while(!mp_grid_path(global.NavMesh, path, x, y, flag_x, flag_y, true))
+        {
+            flag_x = random_range(0, room_width/global.NavRes)*global.NavRes;
+            flag_y = random_range(0, room_height/global.NavRes)*global.NavRes;
+            counter++;
+        }
+        target = instance_create(flag_x, flag_y, obj_Flag);
+        dist = 0;
+        state = "panic";
+    break;
+    case "panic":
+        if(instance_exists(obj_Enemy))
+        {
+            Enemy = instance_nearest(x,y,obj_Enemy);
+            EnemyDistance = point_distance(x,y,Enemy.x,Enemy.y);
+        }
+        else
+        {
+            EnemyDistance = 9999999;
+        }
+        if( point_distance(x,y,target.x,target.y) &lt; 100 &amp;&amp; target != obj_Player)
+        {
+            with(target)
+            {
+                instance_destroy();
+            }
+            if (EnemyDistance &lt; PanicDistance)
+            {
+                state = "panic start";
+                exit;
+            }
+            else
+            {
+                target = obj_Player;
+                state = "follow";
+            }
+        }
+        dist = 0;
+    break;
+    case "food":
+        dist = 0;
+    break;
+}
+
+var point_x, point_y;
+
+if(mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true))
+{
+    point_x = path_get_point_x(path,1);
+    point_y = path_get_point_y(path,1);
+    if(point_distance(target.x,target.y,x,y) &gt; dist)
+    {
+        moveTarget_x = point_x;
+        moveTarget_y = point_y;
+    }
+    else if (point_distance(target.x,target.y,x,y) &lt; dist/2 )
+    {
+        moveTarget_x = x + lengthdir_x(dist,point_direction(target.x, target.y, x, y));
+        moveTarget_y = y + lengthdir_y(dist,point_direction(target.x, target.y, x, y));
+    }
+    else
+    {
+        moveTarget_x = x;
+        moveTarget_y = y;
+    }
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Decide speed from state and powerup
+/*
 var spd_1, spd_2;
 spd_1 = 1;
 spd_2 = 1;
@@ -248,6 +329,7 @@ if (powerup == 2) { spd_2 = 2; }
 if (slowed) { spd_3 = 0.5; }
 spd = MaxSpd * spd_1 * spd_2 * spd_3;
 acc = MaxAcc * spd_1 * spd_2 * spd_3;
+*/
 </string>
           </argument>
         </arguments>
@@ -372,105 +454,6 @@ event_inherited();
           </argument>
         </arguments>
       </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Switch on state
-var dist, flag_x, flag_y, Enemy, EnemyDistance;
-if(!instance_exists(target)){target = obj_Player}
-switch(state)
-{
-    case "follow":
-        target = obj_Player;
-        dist = 150;
-    break;
-    case "panic start":
-        
-        flag_x = random_range(0, room_width/global.NavRes)*global.NavRes;
-        flag_y = random_range(0, room_height/global.NavRes)*global.NavRes;
-        while(!mp_grid_path(global.NavMesh, path, x, y, flag_x, flag_y, true))
-        {
-            flag_x = random_range(0, room_width/global.NavRes)*global.NavRes;
-            flag_y = random_range(0, room_height/global.NavRes)*global.NavRes;
-        }
-        target = instance_create(flag_x, flag_y, obj_Flag);
-        dist = 0;
-        state = "panic";
-    break;
-    case "panic":
-        if(instance_exists(obj_Enemy))
-        {
-            Enemy = instance_nearest(x,y,obj_Enemy);
-            EnemyDistance = point_distance(x,y,Enemy.x,Enemy.y);
-        }
-        else
-        {
-            EnemyDistance = 9999999;
-        }
-        if( point_distance(x,y,target.x,target.y) &lt; 100)
-        {
-            with(target)
-            {
-                instance_destroy();
-            }
-            if (EnemyDistance &lt; PanicDistance)
-            {
-                state = "panic start";
-                exit;
-            }
-            else
-            {
-                target = obj_Player;
-                state = "follow";
-            }
-        }
-        dist = 0;
-    break;
-    case "food":
-        dist = 0;
-    break;
-}
-
-var point_x, point_y;
-
-if(mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true))
-{
-    point_x = path_get_point_x(path,1);
-    point_y = path_get_point_y(path,1);
-    if(point_distance(target.x,target.y,x,y) &gt; dist)
-    {
-        moveTarget_x = point_x;
-        moveTarget_y = point_y;
-    }
-    else if (point_distance(target.x,target.y,x,y) &lt; dist/2 )
-    {
-        moveTarget_x = x + lengthdir_x(dist,point_direction(target.x, target.y, x, y));
-        moveTarget_y = y + lengthdir_y(dist,point_direction(target.x, target.y, x, y));
-    }
-    else
-    {
-        moveTarget_x = x;
-        moveTarget_y = y;
-    }
-}
-
-</string>
-          </argument>
-        </arguments>
-      </action>
     </event>
     <event eventtype="4" ename="obj_Fire">
       <action>
@@ -541,58 +524,11 @@ with(other)
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Raycast
-/*
-for ( j = 0; j &lt; 360; j += raydensity)
-{
-    for (i = raymin; i &lt; raylength; i+=5)
-    {
-        ray_x = self.x + lengthdir_x(i,j)
-        ray_y = self.y + lengthdir_y(i,j)
-        if(position_empty(ray_x, ray_y))
-        {
-            draw_point(ray_x, ray_y);
-        }
-        else { break; }
-    }    
-}
-
-
-draw_set_colour(c_aqua);
-draw_circle(x,y,PanicDistance,true);
-draw_path(path,x,y,true);
-draw_set_colour(c_red);
-draw_line(x,y,x + (moveTarget_x-x)*5,y + (moveTarget_y-y)*5);
-*/
-draw_self();
-event_inherited();
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
   </events>
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
-  <PhysicsObjectDensity>0.5</PhysicsObjectDensity>
+  <PhysicsObjectDensity>0.200000002980232</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.00999999977648258</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>2</PhysicsObjectLinearDamping>

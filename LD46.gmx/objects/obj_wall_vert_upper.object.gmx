@@ -32,10 +32,10 @@ open = false;
 
 event_inherited();
 
-bwx = 16;
+bwx = 96;
 bwy = 96;
-box = 0;
-boy = 0;
+box = 8;
+boy = 20;
 box5 = 24;   //15
 boy5 = -28;   // 19
 box6 = 8;   //15
@@ -90,19 +90,19 @@ depth = obj_Player.y + y - 32;
 len = 2000;
 if (distance_to_point(global.emitter_x,global.emitter_y) &lt; radius)
 {
-    x1 = x - (bwx/2 + box) * image_xscale - view_xview;
-    x2 = x + 24 * image_xscale - view_xview;
-    x3 = x + (bwx/2 + box) * image_xscale - view_xview;
-    x4 = x - (bwx/2 + box) * image_xscale - view_xview;
-    x5 = x + (box5) * image_xscale - view_xview;
-    x6 = x + (box6) * image_xscale - view_xview;
+    x1 = x - box * image_xscale - global.emit_off_x;
+    x2 = x + (bwx/2) * image_xscale - global.emit_off_x;
+    x3 = x + (bwx/2) * image_xscale - global.emit_off_x;
+    x4 = x + box * image_xscale - global.emit_off_x;
+    x5 = x + box * image_xscale - global.emit_off_x;
+    x6 = x - box * image_xscale - global.emit_off_x;
     
-    y1 = y - bwy/2 + boy - view_yview;
-    y2 = y - bwy/2 + boy - view_yview;
-    y3 = y + bwy/2 + boy - view_yview;
-    y4 = y + bwy/2 + boy - view_yview;
-    y5 = y + boy5 - view_yview;
-    y6 = y + boy6 - view_yview;
+    y1 = y - bwy/2 - global.emit_off_y;
+    y2 = y - bwy/2 - global.emit_off_y;
+    y3 = y - bwy/2 + boy - global.emit_off_y;
+    y4 = y - bwy/2 + boy - global.emit_off_y;
+    y5 = y + bwy/2 - global.emit_off_y;
+    y6 = y + bwy/2 - global.emit_off_y;
     
     dirc = point_direction(global.emitter_x,global.emitter_y,x1,y1);
     x11 = x1+lengthdir_x(len,dirc);
@@ -124,26 +124,27 @@ if (distance_to_point(global.emitter_x,global.emitter_y) &lt; radius)
     x51 = x5+lengthdir_x(len,dirc);
     y51 = y5+lengthdir_y(len,dirc);
     
-    dirc = point_direction(global.emitter_x,global.emitter_y,x5,y5);
+    dirc = point_direction(global.emitter_x,global.emitter_y,x6,y6);
     x61 = x6+lengthdir_x(len,dirc);
     y61 = y6+lengthdir_y(len,dirc);
     
+    
     draw_primitive_begin(pr_trianglestrip);
-    draw_set_colour(c_ltgray);
+    draw_set_colour(global.shdwColor);
     draw_set_blend_mode(bm_normal);
     draw_set_alpha(1);
     draw_vertex(x1,y1);
     draw_vertex(x11,y11);
     draw_vertex(x2,y2);
     draw_vertex(x21,y21);
-    draw_vertex(x5,y5);
-    draw_vertex(x51,y51);
-    draw_vertex(x6,y6);
-    draw_vertex(x61,y61);
     draw_vertex(x3,y3);
     draw_vertex(x31,y31);
     draw_vertex(x4,y4);
     draw_vertex(x41,y41);
+    draw_vertex(x5,y5);
+    draw_vertex(x51,y51);
+    draw_vertex(x6,y6);
+    draw_vertex(x61,y61);
     draw_vertex(x1,y1);
     draw_vertex(x11,y11);
 
@@ -172,9 +173,9 @@ if (distance_to_point(global.emitter_x,global.emitter_y) &lt; radius)
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>0,48</point>
-    <point>48,48</point>
-    <point>48,96</point>
-    <point>0,96</point>
+    <point>24,40</point>
+    <point>96,40</point>
+    <point>96,96</point>
+    <point>24,96</point>
   </PhysicsShapePoints>
 </object>

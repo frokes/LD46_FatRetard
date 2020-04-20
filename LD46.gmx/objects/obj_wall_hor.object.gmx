@@ -53,8 +53,8 @@ boy = -38;
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>0,48</point>
-    <point>96,48</point>
+    <point>0,40</point>
+    <point>96,40</point>
     <point>96,96</point>
     <point>0,96</point>
   </PhysicsShapePoints>

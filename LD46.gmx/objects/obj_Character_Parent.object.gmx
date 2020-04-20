@@ -49,7 +49,7 @@ mvspd_y = 0;
 
 MaxSpd = 10;
 
-fric = 50;
+fric = 60;
 
 facing = 3;
 
@@ -63,6 +63,7 @@ image_speed = 0.3;
 // Audio emitter creation
 SoundEmitter = audio_emitter_create();
 pitch = random_range(-0.5,0.5);
+audio_emitter_falloff(SoundEmitter,50,200,1);
 </string>
           </argument>
         </arguments>
@@ -110,6 +111,7 @@ image_blend = c_white;
           <argument>
             <kind>1</kind>
             <string>invurn = false;
+image_blend = c_white;
 </string>
           </argument>
         </arguments>
@@ -133,6 +135,7 @@ image_blend = c_white;
           <argument>
             <kind>1</kind>
             <string>stun = false;
+image_blend = c_white;
 </string>
           </argument>
         </arguments>
@@ -163,58 +166,6 @@ depth = obj_Player.y - y;
       </action>
     </event>
     <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Target Speed 
-
-if(isPlayer)
-{
-    mvspd_x = keyboard_check(ord("D")) - keyboard_check(ord("A"));
-    mvspd_y = keyboard_check(ord("S")) - keyboard_check(ord("W"));
-    
-
-}
-else
-{
-    mvspd_x = clamp(moveTarget_x - x,-1,1);
-    mvspd_y = clamp(moveTarget_y - y,-1,1);
-}
-
-if(mvspd_x &gt; 0)
-{
-    facing = 1;
-}
-else if (mvspd_x &lt; 0)
-{
-    facing = 3;
-}
-
-if(mvspd_y &lt; 0)
-{
-    facing = 2;
-}
-else if (mvspd_y &gt; 0)
-{
-    facing = 4;
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
       <action>
         <libid>1</libid>
         <id>605</id>
@@ -268,7 +219,7 @@ spd_4 = 1;
 if (state == "panic") { spd_1 = 3; } 
 if (powerup == 2) { spd_2 = 2; }
 if (slowed) { spd_3 = 0.5; }
-if (state == "roam") { spd_4 = 0.5; }
+if (state == "roam") { spd_4 = 1; }
 spd = MaxSpd * spd_1 * spd_2 * spd_3 * spd_4;
 acc = MaxAcc * spd_1 * spd_2 * spd_3 * spd_4;
 
@@ -356,6 +307,58 @@ audio_emitter_velocity(SoundEmitter,phy_speed_x,phy_speed_y,0);
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Target Speed 
+
+if(isPlayer)
+{
+    mvspd_x = keyboard_check(ord("D")) - keyboard_check(ord("A"));
+    mvspd_y = keyboard_check(ord("S")) - keyboard_check(ord("W"));
+    
+
+}
+else
+{
+    mvspd_x = clamp(moveTarget_x - x,-1,1);
+    mvspd_y = clamp(moveTarget_y - y,-1,1);
+}
+
+if(mvspd_x &gt; 0)
+{
+    facing = 1;
+}
+else if (mvspd_x &lt; 0)
+{
+    facing = 3;
+}
+
+if(mvspd_y &lt; 0)
+{
+    facing = 2;
+}
+else if (mvspd_y &gt; 0)
+{
+    facing = 4;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="4" ename="obj_Freeze">
       <action>
@@ -407,7 +410,9 @@ if(!invurn)
 {
     HP -= 1;
     invurn = true;
+    stun = true;
     alarm[1] = 15;
+    alarm[0] = 20;
 }
 with(other)
 {
@@ -469,7 +474,10 @@ if(!invurn)
 {
     HP -= 2;
     invurn = true;
+    stun = true;
     alarm[1] = 15;
+    alarm[0] = 45;
+    image_blend = c_red
 }
 </string>
           </argument>
@@ -498,7 +506,14 @@ if(!invurn)
 {
     HP--;
     invurn = true;
-    alarm[1] = 15;
+    stun = true;
+    alarm[0] = 15;
+    alarm[1] = 30;
+    image_blend = c_red
+    with(other)
+    {
+        instance_destroy();
+    }
 }
 </string>
           </argument>

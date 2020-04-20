@@ -32,9 +32,9 @@ open = false;
 
 event_inherited();
 
-bwx = 32 * image_xscale;
+bwx = 56;
 bwy = 20;
-box = 8 * image_xscale;
+box = 20;
 boy = -38;
 
 </string>

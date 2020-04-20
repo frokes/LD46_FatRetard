@@ -58,12 +58,26 @@
       <sprite>sprites\spr_spider_charged</sprite>
       <sprite>sprites\spr_spider_cute</sprite>
     </sprites>
+    <sprite>sprites\spr_exit</sprite>
+    <sprites name="powerups">
+      <sprite>sprites\spr_potion</sprite>
+      <sprite>sprites\spr_potion_fire</sprite>
+      <sprite>sprites\spr_potion_lightning</sprite>
+      <sprite>sprites\spr_potion_ice</sprite>
+    </sprites>
+    <sprite>sprites\spr_scientist</sprite>
+    <sprite>sprites\spr_text</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bkg_tiles</background>
     <background>background\bkg_crosshatch</background>
     <background>background\bkg_large_tiles</background>
     <background>background\bkg_black</background>
+    <background>background\bkg_crosshatch_ligt</background>
+    <background>background\bkg_title</background>
+    <background>background\bkg_congratz</background>
+    <background>background\bkg_thanks</background>
+    <background>background\bkg_splash</background>
   </backgrounds>
   <paths name="paths"/>
   <objects name="objects">
@@ -71,8 +85,11 @@
     <object>objects\obj_Character_Parent</object>
     <objects name="Walls">
       <object>objects\obj_wall_hor</object>
+      <object>objects\obj_wall_hor_end</object>
       <object>objects\obj_wall_hor_door</object>
       <object>objects\obj_wall_vert</object>
+      <object>objects\obj_wall_vert_end2</object>
+      <object>objects\obj_wall_vert_end1</object>
       <object>objects\obj_wall_vert_upper</object>
       <object>objects\obj_wall_T</object>
       <object>objects\obj_wall_vert_lower</object>
@@ -82,8 +99,8 @@
       <object>objects\obj_Player</object>
       <object>objects\obj_FRK</object>
       <object>objects\obj_spider_pink</object>
-      <object>objects\obj_spider_charged</object>
       <object>objects\obj_spider_blue</object>
+      <object>objects\obj_spider_charged</object>
       <object>objects\obj_Friendly</object>
     </objects>
     <objects name="Attacks">
@@ -98,11 +115,26 @@
       <object>objects\obj_NavMesh</object>
       <object>objects\obj_Flag</object>
       <object>objects\obj_Food</object>
+      <object>objects\obj_PowerupFire</object>
+      <object>objects\obj_PowerupLightning</object>
+      <object>objects\obj_PowerupIce</object>
     </objects>
+    <object>objects\obj_invisWall</object>
+    <object>objects\obj_Exit</object>
+    <object>objects\obj_scientist</object>
+    <object>objects\obj_timer</object>
+    <object>objects\obj_menu</object>
+    <object>objects\obj_splashTimer</object>
+    <object>objects\obj_FinalTimer</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room0</room>
-    <room>rooms\room1</room>
+    <room>rooms\splash</room>
+    <room>rooms\title</room>
+    <room>rooms\Level_1</room>
+    <room>rooms\Level_2</room>
+    <room>rooms\congratz</room>
+    <room>rooms\dev_room</room>
+    <room>rooms\thanks</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

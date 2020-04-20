@@ -25,13 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>shadowX = view_wview;
+            <string>shadowX = room_width;
+shadowY = room_height;
 
-shadowY = view_hview;
-
+global.emit_off_x = view_xview;
+global.emit_off_y = view_yview;
+global.shdwColor = c_white;
 global.shadows = surface_create(shadowX, shadowY);
-global.emitter_x = obj_Player.x - view_xview;
-global.emitter_y = obj_Player.y - 32 - view_yview;
+global.emitter_x = obj_Player.x - global.emit_off_x;
+global.emitter_y = obj_Player.y - 32 - global.emit_off_y;
 
 debug_noshadows = false;
 </string>
@@ -83,10 +85,10 @@ debug_noshadows = false;
 global.shadows = surface_create(shadowX, shadowY);
 surface_set_target(global.shadows);
 
-draw_sprite_ext(spr_light,-1,global.emitter_x,global.emitter_y,1,1,0,c_ltgray,1);
+draw_sprite_ext(spr_light,-1,global.emitter_x,global.emitter_y,1,1,0,global.shdwColor,1);
 
-global.emitter_x = obj_Player.x - view_xview;
-global.emitter_y = obj_Player.y - 32 - view_yview;
+global.emitter_x = obj_Player.x - global.emit_off_x;
+global.emitter_y = obj_Player.y - 32 - global.emit_off_y;
 
 draw_set_colour(c_white);
 </string>
@@ -111,16 +113,16 @@ draw_set_colour(c_white);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(keyboard_check_pressed(ord("L")))
+            <string>/*if(keyboard_check_pressed(ord("L")))
 {
     debug_noshadows = 1 - debug_noshadows;
-}
+}*/
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="74">
+    <event eventtype="8" enumb="73">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -140,7 +142,8 @@ draw_set_colour(c_white);
             <string>if(!debug_noshadows)
 {
 draw_set_blend_mode(bm_subtract);
-draw_surface(global.shadows,0,0);
+draw_surface(global.shadows,global.emit_off_x,global.emit_off_y);
+
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 }

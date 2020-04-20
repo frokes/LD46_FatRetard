@@ -30,11 +30,124 @@ image_speed = 0;
 open = false;
 
 event_inherited();
-
+invisWall = instance_create(x,y,obj_invisWall);
+with(invisWall)
+{
+    owner = other;
+}
 bwx = 96;
-bwy = 20;
+bwy = 10;
 box = 0;
+boy = -33;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Calculate shadows for player
+len = 2000;
+
+if (distance_to_point(global.emitter_x,global.emitter_y) &lt; radius)
+{
+    x1 = x - bwx/2 * image_xscale + box - global.emit_off_x;
+    x2 = x + bwx/2 * image_xscale + box - global.emit_off_x;
+    x3 = x + bwx/2 * image_xscale + box - global.emit_off_x;
+    x4 = x - bwx/2 * image_xscale + box - global.emit_off_x;
+    
+    y1 = y - bwy/2 + boy - global.emit_off_y;
+    y2 = y - bwy/2 + boy - global.emit_off_y;
+    y3 = y + bwy/2 + boy - global.emit_off_y;
+    y4 = y + bwy/2 + boy - global.emit_off_y;
+    
+    dirc = point_direction(global.emitter_x,global.emitter_y,x1,y1);
+    x11 = x1+lengthdir_x(len,dirc);
+    y11 = y1+lengthdir_y(len,dirc);
+    
+    dirc = point_direction(global.emitter_x,global.emitter_y,x2,y2);
+    x21 = x2+lengthdir_x(len,dirc);
+    y21 = y2+lengthdir_y(len,dirc);
+    
+    dirc = point_direction(global.emitter_x,global.emitter_y,x3,y3);
+    x31 = x3+lengthdir_x(len,dirc);
+    y31 = y3+lengthdir_y(len,dirc);
+    
+    dirc = point_direction(global.emitter_x,global.emitter_y,x4,y4);
+    x41 = x4+lengthdir_x(len,dirc);
+    y41 = y4+lengthdir_y(len,dirc);
+    
+    draw_primitive_begin(pr_trianglestrip);
+    draw_set_colour(c_ltgray);
+    draw_set_blend_mode(bm_normal);
+    draw_set_alpha(1);
+    draw_vertex(x1,y1);
+    draw_vertex(x11,y11);
+    draw_vertex(x2,y2);
+    draw_vertex(x21,y21);
+    draw_vertex(x3,y3);
+    draw_vertex(x31,y31);
+    draw_vertex(x4,y4);
+    draw_vertex(x41,y41);
+    draw_vertex(x1,y1);
+    draw_vertex(x11,y11);
+
+    draw_primitive_end();
+    
+    draw_set_colour(c_white);
+    draw_set_alpha(1);
+    draw_set_blend_mode(bm_normal);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_lightning">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>bwx = 24;
+bwy = 20;
+box = -36*image_xscale;
 boy = -38;
+
+image_index = 1;
+
+with(invisWall)
+{
+    instance_destroy();
+}
+
+mp_grid_clear_rectangle(global.NavMesh,x-24,y-48,x+24,y+48);
 </string>
           </argument>
         </arguments>
@@ -53,9 +166,9 @@ boy = -38;
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>0,48</point>
-    <point>96,48</point>
-    <point>96,96</point>
+    <point>0,40</point>
+    <point>24,40</point>
+    <point>24,96</point>
     <point>0,96</point>
   </PhysicsShapePoints>
 </object>
