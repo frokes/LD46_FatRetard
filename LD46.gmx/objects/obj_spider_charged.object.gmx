@@ -241,7 +241,7 @@ event_inherited();
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>32,32</point>
-    <point>16,32</point>
+    <point>32,30</point>
+    <point>18,32</point>
   </PhysicsShapePoints>
 </object>

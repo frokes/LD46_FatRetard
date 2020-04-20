@@ -42,6 +42,8 @@
   </sprites>
   <backgrounds name="background">
     <background>background\bkg_tiles</background>
+    <background>background\bkg_crosshatch</background>
+    <background>background\bkg_large_tiles</background>
   </backgrounds>
   <paths name="paths"/>
   <objects name="objects">

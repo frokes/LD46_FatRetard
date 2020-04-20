@@ -25,13 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>shadowX = room_width;
+            <string>shadowX = view_wview;
 
-shadowY = room_height;
+shadowY = view_hview;
 
 global.shadows = surface_create(shadowX, shadowY);
-global.emitter_x = obj_Player.x;
-global.emitter_y = obj_Player.y - 32;
+global.emitter_x = obj_Player.x - view_xview;
+global.emitter_y = obj_Player.y - 32 - view_yview;
 
 debug_noshadows = false;
 </string>
@@ -85,8 +85,8 @@ surface_set_target(global.shadows);
 
 draw_sprite_ext(spr_light,-1,global.emitter_x,global.emitter_y,1,1,0,c_ltgray,1);
 
-global.emitter_x = obj_Player.x;
-global.emitter_y = obj_Player.y - 32;
+global.emitter_x = obj_Player.x - view_xview;
+global.emitter_y = obj_Player.y - 32 - view_yview;
 
 draw_set_colour(c_white);
 </string>
@@ -140,7 +140,7 @@ draw_set_colour(c_white);
             <string>if(!debug_noshadows)
 {
 draw_set_blend_mode(bm_subtract);
-draw_surface(global.shadows,0,0);
+draw_surface(global.shadows,view_xview,view_yview);
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 }

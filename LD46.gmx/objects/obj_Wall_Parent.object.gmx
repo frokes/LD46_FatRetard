@@ -93,15 +93,15 @@ len = 2000;
 
 if (distance_to_point(global.emitter_x,global.emitter_y) &lt; radius)
 {
-    x1 = x - bwx/2 * image_xscale + box;
-    x2 = x + bwx/2 * image_xscale + box;
-    x3 = x + bwx/2 * image_xscale + box;
-    x4 = x - bwx/2 * image_xscale + box;
+    x1 = x - bwx/2 * image_xscale + box - view_xview;
+    x2 = x + bwx/2 * image_xscale + box - view_xview;
+    x3 = x + bwx/2 * image_xscale + box - view_xview;
+    x4 = x - bwx/2 * image_xscale + box - view_xview;
     
-    y1 = y - bwy/2 + boy;
-    y2 = y - bwy/2 + boy;
-    y3 = y + bwy/2 + boy;
-    y4 = y + bwy/2 + boy;
+    y1 = y - bwy/2 + boy - view_yview;
+    y2 = y - bwy/2 + boy - view_yview;
+    y3 = y + bwy/2 + boy - view_yview;
+    y4 = y + bwy/2 + boy - view_yview;
     
     dirc = point_direction(global.emitter_x,global.emitter_y,x1,y1);
     x11 = x1+lengthdir_x(len,dirc);
