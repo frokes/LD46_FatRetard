@@ -14,7 +14,9 @@
     <sound>sound\snd_spider_walk</sound>
   </sounds>
   <sprites name="sprites">
-    <sprite>sprites\spr_Player</sprite>
+    <sprite>sprites\spr_Player_right</sprite>
+    <sprite>sprites\spr_Player_up</sprite>
+    <sprite>sprites\spr_Player_down</sprite>
     <sprite>sprites\spr_Wall</sprite>
     <sprite>sprites\spr_FRK</sprite>
     <sprite>sprites\spr_Food</sprite>
@@ -44,6 +46,7 @@
     <background>background\bkg_tiles</background>
     <background>background\bkg_crosshatch</background>
     <background>background\bkg_large_tiles</background>
+    <background>background\bkg_black</background>
   </backgrounds>
   <paths name="paths"/>
   <objects name="objects">
@@ -63,6 +66,7 @@
       <object>objects\obj_spider_pink</object>
       <object>objects\obj_spider_charged</object>
       <object>objects\obj_spider_blue</object>
+      <object>objects\obj_Friendly</object>
     </objects>
     <objects name="Attacks">
       <object>objects\obj_Projectile</object>
@@ -79,6 +83,7 @@
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\room1</room>
     <room>rooms\room0</room>
   </rooms>
   <help>

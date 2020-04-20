@@ -221,7 +221,7 @@
     <option_freeze>false</option_freeze>
     <option_frequency>0</option_frequency>
     <option_frontimage>nil</option_frontimage>
-    <option_fullscreen>True</option_fullscreen>
+    <option_fullscreen>False</option_fullscreen>
     <option_gameguid>{13B84FBC-19AB-4FE5-BABE-44444B416AD7}</option_gameguid>
     <option_gameid>263800444</option_gameid>
     <option_hasloadimage>false</option_hasloadimage>

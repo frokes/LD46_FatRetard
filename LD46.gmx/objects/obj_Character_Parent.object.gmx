@@ -53,6 +53,10 @@ fric = 50;
 
 facing = 3;
 
+state = "spawned"
+
+powerup = 0;
+
 phy_fixed_rotation = true;
 image_speed = 0.3;
 
@@ -161,26 +165,6 @@ depth = obj_Player.y - y;
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>Handle Input</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -202,6 +186,7 @@ if(isPlayer)
     mvspd_x = keyboard_check(ord("D")) - keyboard_check(ord("A"));
     mvspd_y = keyboard_check(ord("S")) - keyboard_check(ord("W"));
     
+
 }
 else
 {
@@ -273,8 +258,21 @@ if (sqrt(mvspd_x^^2 + mvspd_y^^2) &gt; 1 )
     mvspd_x *= 0.707;
     mvspd_y *= 0.707;
 }
-if (slowed) {SPD = spd/2;} else {SPD = spd;}
-if (phy_speed &lt; SPD &amp;&amp; stun == false)
+/// Decide speed from state and powerup
+var spd_1, spd_2;
+spd_1 = 1;
+spd_2 = 1;
+spd_3 = 1;
+spd_4 = 1;
+
+if (state == "panic") { spd_1 = 3; } 
+if (powerup == 2) { spd_2 = 2; }
+if (slowed) { spd_3 = 0.5; }
+if (state == "roam") { spd_4 = 0.5; }
+spd = MaxSpd * spd_1 * spd_2 * spd_3 * spd_4;
+acc = MaxAcc * spd_1 * spd_2 * spd_3 * spd_4;
+
+if (phy_speed &lt; spd &amp;&amp; stun == false)
 {
     if(!slowed)
     {
@@ -331,27 +329,21 @@ if(HP &lt;= 0){ instance_destroy(); }
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Update animation
-//if(phy_speed &gt; 0)
-//{
-
-    if((mvspd_x &gt; 0 &amp;&amp; facing != 1) || (mvspd_x &lt; 0 &amp;&amp; facing != 3) || (mvspd_y &lt; 0 &amp;&amp; facing != 2) || (mvspd_y &gt; 0 &amp;&amp; facing != 4) || (image_index mod animCycle == 0))
-    {
-        image_index = animCycle * facing-1; 
-    }
-//}
+            <string>/// Update sound emitter location
+audio_emitter_position(SoundEmitter,x,y,0);
+audio_emitter_velocity(SoundEmitter,phy_speed_x,phy_speed_y,0);
 </string>
           </argument>
         </arguments>
       </action>
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>605</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
         <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
@@ -360,10 +352,7 @@ if(HP &lt;= 0){ instance_destroy(); }
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Update sound emitter location
-audio_emitter_position(SoundEmitter,x,y,0);
-audio_emitter_velocity(SoundEmitter,phy_speed_x,phy_speed_y,0);
-</string>
+            <string>Handle Input</string>
           </argument>
         </arguments>
       </action>

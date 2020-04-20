@@ -65,7 +65,7 @@ radius = 2000;
           <argument>
             <kind>1</kind>
             <string>/// Z Depth calculation
-depth = obj_Player.y + y - 32;
+depth = obj_Player.y + y ;
 </string>
           </argument>
         </arguments>

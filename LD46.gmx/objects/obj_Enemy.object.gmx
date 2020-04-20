@@ -7,7 +7,305 @@
   <persistent>0</persistent>
   <parentName>obj_Character_Parent</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>event_inherited()
+target = noone;
+atkTarget = obj_Friendly;
+aggroDist = 1500;
+state = "roam";
+alarm[3] = 30;
+raymin = 50;
+raylength = 1000;
+raydensity = 5;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Raycast
+/*
+if(doesRaycast)
+{
+    
+    if(!instance_exists(obj_Player)) { atkTarget = noone; state = "roam";}
+    var hit = noone;
+    for ( j = 0; j &lt; 360; j += raydensity)
+    {
+        for (i = raymin; i &lt; raylength; i += 10)
+        {
+            ray_x = self.x + lengthdir_x(i,j)
+            ray_y = self.y + lengthdir_y(i,j)
+            if(!position_empty(ray_x, ray_y))
+            { 
+                
+                if (target.object_index == obj_Flag)
+                {
+                    hit = collision_line(self.x,self.y,ray_x,ray_y,obj_Player,false,true);
+                    show_debug_message(string(hit));
+                }
+                else if (sqrt(atkTarget.x^^2 + atkTarget.y^^2) &gt; sqrt(ray_x^^2 + ray_y^^2))
+                {
+                    hit = collision_line(self.x,self.y,ray_x,ray_y,atkTarget,false,true);
+                }
+                if (hit != noone &amp;&amp; object_get_parent(hit) == obj_Friendly ) 
+                { 
+                    if(target == obj_Flag )
+                    {
+                        with(target)
+                        {
+                            instance_destroy();
+                        }
+                    }
+                    state = "attack"; 
+                    target = hit;
+                    show_debug_message(target);
+                    show_debug_message(state);
+                }
+                break;
+            }
+        }    
+    }
+}    
+alarm[3] = 30;
+*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// State swich and pathfinding
+var path = path_add();
+var flag_x, flag_y;
+switch(state)
+{
+    case "roam":
+        if(target != noone &amp;&amp; instance_exists(target))
+        {
+            if(target.object_index != obj_Flag || distance_to_object(target) &lt; 80 )
+            {
+                if(distance_to_object(target) &lt; 80 &amp;&amp; target.object_index == obj_Flag)
+                {
+                    with(target)
+                    {
+                        instance_destroy();
+                    }
+                }
+                flag_x = random_range(round((x-500)/global.NavRes)*global.NavRes, round((x+500)/global.NavRes)*global.NavRes);
+                flag_y = random_range(round((y-500)/global.NavRes)*global.NavRes, round((y+500)/global.NavRes)*global.NavRes);
+                while(!mp_grid_path(global.NavMesh, path, x, y, flag_x, flag_y, true) )
+                {
+                    flag_x = random_range(round((x-500)/global.NavRes)*global.NavRes, round((x+500)/global.NavRes)*global.NavRes);
+                    flag_y = random_range(round((y-500)/global.NavRes)*global.NavRes, round((y+500)/global.NavRes)*global.NavRes);
+                }
+                target = instance_create(flag_x, flag_y, obj_Flag);
+            }
+        }
+        else
+        {
+            flag_x = random_range(round((x-500)/global.NavRes)*global.NavRes, round((x+500)/global.NavRes)*global.NavRes);
+            flag_y = random_range(round((y-500)/global.NavRes)*global.NavRes, round((y+500)/global.NavRes)*global.NavRes);
+            while(!mp_grid_path(global.NavMesh, path, x, y, flag_x, flag_y, true) &amp;&amp; distance_to_point(flag_x,flag_y) &gt; 1000)
+            {
+                flag_x = random_range(round((x-500)/global.NavRes)*global.NavRes, round((x+500)/global.NavRes)*global.NavRes);
+                flag_y = random_range(round((y-500)/global.NavRes)*global.NavRes, round((y+500)/global.NavRes)*global.NavRes);
+            }
+            target = instance_create(flag_x, flag_y, obj_Flag);
+        }       
+    break;
+    
+    case "attack":
+        if(point_distance(x,y,target.x,target.y) &gt; aggroDist)
+        {
+            state = "roam";
+        }
+    break;
+}
+if(mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true))
+{
+    moveTarget_x = path_get_point_x(path,1);
+    moveTarget_y = path_get_point_y(path,1);
+    if(path_get_length(path) &gt; 2)
+    {
+        lookTarget_x = path_get_point_x(path,2);
+        lookTarget_y = path_get_point_y(path,2);
+    }
+    else
+    {
+        lookTarget_x = moveTarget_x;
+        lookTarget_y = moveTarget_y;
+    }
+}
+else
+{
+    state = "roam";
+    target = noone;
+}
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Inherited events
+event_inherited();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(doesRaycast)
+{
+    var hit = noone;
+    var path = path_add();
+    for ( j = 0; j &lt; 360; j += raydensity)
+    {
+        for (i = raymin; i &lt; raylength; i += 10)
+        {
+            ray_x = self.x + lengthdir_x(i,j)
+            ray_y = self.y + lengthdir_y(i,j)
+            if(!position_empty(ray_x, ray_y))
+            { 
+                hit = collision_line(self.x,self.y,ray_x,ray_y,atkTarget,false,true);
+                if (hit != noone)
+                {
+                    draw_circle_colour(ray_x,ray_y,2,c_red,c_red,true);
+                    
+                    if (target == noone || state == "roam")
+                    { 
+                        show_debug_message(string(self) + "Got a hit!");
+                        draw_circle_colour(ray_x,ray_y,5,c_aqua,c_aqua,true);
+                        if(mp_grid_path(global.NavMesh, path, x, y, ray_x, ray_y, true))
+                        {
+                            if(state == "roam" &amp;&amp; target &gt; 0)
+                            {
+                                if(target.object_index == obj_Flag)
+                                {
+                                    with(target)
+                                    {
+                                        instance_destroy();
+                                    }
+                                }
+                            }
+                            show_debug_message(string(self) + " can navigate, setting new target!");
+                            draw_circle_colour(ray_x,ray_y,2,c_aqua,c_aqua,true);
+                            target = hit;
+                            state = "attack";
+                        }
+                        else
+                        {
+                            show_debug_message(string(self) + " navigation failed!");
+                        }
+                    }
+                    else if(sqrt(target.x^^2 + target.y^^2) &gt; sqrt(ray_x^^2 + ray_y^^2))
+                    {
+                        show_debug_message(string(self) + " this ones close!");
+                        draw_circle_colour(ray_x,ray_y,5,c_aqua,c_aqua,true);
+                        if(mp_grid_path(global.NavMesh, path, x, y, round(ray_x/global.NavRes), round(ray_y/global.NavRes), true))
+                        {
+                            show_debug_message(string(self) + " navigating to closer target!");
+                            draw_circle_colour(ray_x,ray_y,2,c_aqua,c_aqua,true);
+                            target = hit;
+                            state = "attack";
+                        }
+                    }
+                }
+                break;
+            }
+        }    
+    }
+}    
+draw_self();
+event_inherited();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>

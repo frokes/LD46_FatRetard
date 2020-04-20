@@ -28,8 +28,8 @@
             <string>/// Object variables
 event_inherited();
 
-spd = 25;
-acc = 500;
+MaxSpd = 25;
+MaxAcc = 500;
 
 turnRate = 500;
 turnAcc = 100;

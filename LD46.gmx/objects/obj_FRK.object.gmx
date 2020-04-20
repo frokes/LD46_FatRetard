@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_Character_Parent</parentName>
+  <parentName>obj_Friendly</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -237,105 +237,6 @@ alarm[3] = 30;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Switch on state
-var dist, flag_x, flag_y, Enemy, EnemyDistance;
-if(!instance_exists(target)){target = obj_Player}
-switch(state)
-{
-    case "follow":
-        target = obj_Player;
-        dist = 150;
-    break;
-    case "panic start":
-        
-        flag_x = random_range(0, room_width/global.NavRes)*global.NavRes;
-        flag_y = random_range(0, room_height/global.NavRes)*global.NavRes;
-        while(!mp_grid_path(global.NavMesh, path, x, y, flag_x, flag_y, true))
-        {
-            flag_x = random_range(0, room_width/global.NavRes)*global.NavRes;
-            flag_y = random_range(0, room_height/global.NavRes)*global.NavRes;
-        }
-        target = instance_create(flag_x, flag_y, obj_Flag);
-        dist = 0;
-        state = "panic";
-    break;
-    case "panic":
-        if(instance_exists(obj_Enemy))
-        {
-            Enemy = instance_nearest(x,y,obj_Enemy);
-            EnemyDistance = point_distance(x,y,Enemy.x,Enemy.y);
-        }
-        else
-        {
-            EnemyDistance = 9999999;
-        }
-        if( point_distance(x,y,target.x,target.y) &lt; 100)
-        {
-            with(target)
-            {
-                instance_destroy();
-            }
-            if (EnemyDistance &lt; PanicDistance)
-            {
-                state = "panic start";
-                exit;
-            }
-            else
-            {
-                target = obj_Player;
-                state = "follow";
-            }
-        }
-        dist = 0;
-    break;
-    case "food":
-        dist = 0;
-    break;
-}
-
-var point_x, point_y;
-
-if(mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true))
-{
-    point_x = path_get_point_x(path,1);
-    point_y = path_get_point_y(path,1);
-    if(point_distance(target.x,target.y,x,y) &gt; dist)
-    {
-        moveTarget_x = point_x;
-        moveTarget_y = point_y;
-    }
-    else if (point_distance(target.x,target.y,x,y) &lt; dist/2 )
-    {
-        moveTarget_x = x + lengthdir_x(dist,point_direction(target.x, target.y, x, y));
-        moveTarget_y = y + lengthdir_y(dist,point_direction(target.x, target.y, x, y));
-    }
-    else
-    {
-        moveTarget_x = x;
-        moveTarget_y = y;
-    }
-}
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Decide speed from state and powerup
 var spd_1, spd_2;
 spd_1 = 1;
@@ -378,7 +279,6 @@ if(powerup == 1)
     
     if(nearestFire != noone)
     {
-        show_debug_message(string(distance_to_point(nearestFire.x, nearestFire.y)));
         if(distance_to_point(nearestFire.x, nearestFire.y) &gt; 16)
         {
             instance_create(x,y,obj_Fire);
@@ -468,6 +368,105 @@ if(powerup == 2)
             <string>/// Call inherited events
 
 event_inherited();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Switch on state
+var dist, flag_x, flag_y, Enemy, EnemyDistance;
+if(!instance_exists(target)){target = obj_Player}
+switch(state)
+{
+    case "follow":
+        target = obj_Player;
+        dist = 150;
+    break;
+    case "panic start":
+        
+        flag_x = random_range(0, room_width/global.NavRes)*global.NavRes;
+        flag_y = random_range(0, room_height/global.NavRes)*global.NavRes;
+        while(!mp_grid_path(global.NavMesh, path, x, y, flag_x, flag_y, true))
+        {
+            flag_x = random_range(0, room_width/global.NavRes)*global.NavRes;
+            flag_y = random_range(0, room_height/global.NavRes)*global.NavRes;
+        }
+        target = instance_create(flag_x, flag_y, obj_Flag);
+        dist = 0;
+        state = "panic";
+    break;
+    case "panic":
+        if(instance_exists(obj_Enemy))
+        {
+            Enemy = instance_nearest(x,y,obj_Enemy);
+            EnemyDistance = point_distance(x,y,Enemy.x,Enemy.y);
+        }
+        else
+        {
+            EnemyDistance = 9999999;
+        }
+        if( point_distance(x,y,target.x,target.y) &lt; 100)
+        {
+            with(target)
+            {
+                instance_destroy();
+            }
+            if (EnemyDistance &lt; PanicDistance)
+            {
+                state = "panic start";
+                exit;
+            }
+            else
+            {
+                target = obj_Player;
+                state = "follow";
+            }
+        }
+        dist = 0;
+    break;
+    case "food":
+        dist = 0;
+    break;
+}
+
+var point_x, point_y;
+
+if(mp_grid_path(global.NavMesh, path, x, y, target.x, target.y, true))
+{
+    point_x = path_get_point_x(path,1);
+    point_y = path_get_point_y(path,1);
+    if(point_distance(target.x,target.y,x,y) &gt; dist)
+    {
+        moveTarget_x = point_x;
+        moveTarget_y = point_y;
+    }
+    else if (point_distance(target.x,target.y,x,y) &lt; dist/2 )
+    {
+        moveTarget_x = x + lengthdir_x(dist,point_direction(target.x, target.y, x, y));
+        moveTarget_y = y + lengthdir_y(dist,point_direction(target.x, target.y, x, y));
+    }
+    else
+    {
+        moveTarget_x = x;
+        moveTarget_y = y;
+    }
+}
+
 </string>
           </argument>
         </arguments>
