@@ -120,7 +120,7 @@ draw_set_colour(c_white);
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="73">
+    <event eventtype="8" enumb="74">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -140,7 +140,7 @@ draw_set_colour(c_white);
             <string>if(!debug_noshadows)
 {
 draw_set_blend_mode(bm_subtract);
-draw_surface(global.shadows,view_xview,view_yview);
+draw_surface(global.shadows,0,0);
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 }

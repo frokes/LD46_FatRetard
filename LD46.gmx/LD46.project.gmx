@@ -14,33 +14,50 @@
     <sound>sound\snd_spider_walk</sound>
   </sounds>
   <sprites name="sprites">
-    <sprite>sprites\spr_Player_right</sprite>
-    <sprite>sprites\spr_Player_up</sprite>
-    <sprite>sprites\spr_Player_down</sprite>
-    <sprite>sprites\spr_Wall</sprite>
+    <sprites name="Lighting">
+      <sprite>sprites\spr_light</sprite>
+      <sprite>sprites\spr_light_small</sprite>
+    </sprites>
     <sprite>sprites\spr_FRK</sprite>
-    <sprite>sprites\spr_Food</sprite>
-    <sprite>sprites\spr_Enemy</sprite>
-    <sprite>sprites\spr_flame</sprite>
-    <sprite>sprites\spr_flag</sprite>
-    <sprite>sprites\spr_rock</sprite>
-    <sprite>sprites\spr_heart</sprite>
-    <sprite>sprites\spr_powerup</sprite>
-    <sprite>sprites\spr_powerup_border</sprite>
-    <sprite>sprites\spr_lightning</sprite>
-    <sprite>sprites\spr_ice</sprite>
-    <sprite>sprites\spr_wall_w_door</sprite>
-    <sprite>sprites\spr_light</sprite>
-    <sprite>sprites\spr_light_small</sprite>
-    <sprite>sprites\spr_wall_hor</sprite>
-    <sprite>sprites\spr_wall_hor_door</sprite>
-    <sprite>sprites\spr_wall_vert</sprite>
-    <sprite>sprites\spr_wall_vert_lower</sprite>
-    <sprite>sprites\spr_wall_vert_upper</sprite>
-    <sprite>sprites\spr_spider_cute</sprite>
-    <sprite>sprites\spr_spider_blue</sprite>
-    <sprite>sprites\spr_spider_charged</sprite>
-    <sprite>sprites\spr_fire</sprite>
+    <sprites name="GUI">
+      <sprite>sprites\spr_powerup_border</sprite>
+      <sprite>sprites\spr_powerup</sprite>
+      <sprite>sprites\spr_heart</sprite>
+    </sprites>
+    <sprites name="Debug">
+      <sprite>sprites\spr_Enemy</sprite>
+      <sprite>sprites\spr_flag</sprite>
+      <sprite>sprites\spr_Wall</sprite>
+      <sprite>sprites\spr_Food</sprite>
+    </sprites>
+    <sprites name="Effects">
+      <sprite>sprites\spr_flame</sprite>
+      <sprite>sprites\spr_paper</sprite>
+      <sprite>sprites\spr_lightning</sprite>
+      <sprite>sprites\spr_ice</sprite>
+      <sprite>sprites\spr_fire</sprite>
+    </sprites>
+    <sprites name="Player">
+      <sprite>sprites\spr_Player_right</sprite>
+      <sprite>sprites\spr_Player_up</sprite>
+      <sprite>sprites\spr_Player_down</sprite>
+    </sprites>
+    <sprites name="walls">
+      <sprite>sprites\spr_wall_hor</sprite>
+      <sprite>sprites\spr_wall_vert</sprite>
+      <sprite>sprites\spr_wall_vert_lower</sprite>
+      <sprite>sprites\spr_wall_vert_upper</sprite>
+      <sprite>sprites\spr_door</sprite>
+      <sprite>sprites\spr_wall_vert_end1</sprite>
+      <sprite>sprites\spr_wall_vert_end2</sprite>
+      <sprite>sprites\spr_wall_hor_end</sprite>
+      <sprite>sprites\spr_wall_hor_T</sprite>
+    </sprites>
+    <sprites name="Enemies">
+      <sprite>sprites\spr_spider_blue</sprite>
+      <sprite>sprites\spr_spider_charged</sprite>
+      <sprite>sprites\spr_spider_cute</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bkg_tiles</background>
@@ -57,6 +74,7 @@
       <object>objects\obj_wall_hor_door</object>
       <object>objects\obj_wall_vert</object>
       <object>objects\obj_wall_vert_upper</object>
+      <object>objects\obj_wall_T</object>
       <object>objects\obj_wall_vert_lower</object>
     </objects>
     <objects name="Characters">
@@ -83,8 +101,8 @@
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room1</room>
     <room>rooms\room0</room>
+    <room>rooms\room1</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
