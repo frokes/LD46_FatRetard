@@ -126,10 +126,13 @@
     <object>objects\obj_menu</object>
     <object>objects\obj_splashTimer</object>
     <object>objects\obj_FinalTimer</object>
+    <object>objects\obj_door_broken_dummy</object>
+    <object>objects\obj_door_closed_dummy</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\splash</room>
     <room>rooms\title</room>
+    <room>rooms\Hint</room>
     <room>rooms\Level_1</room>
     <room>rooms\Level_2</room>
     <room>rooms\congratz</room>

@@ -167,8 +167,8 @@ mp_grid_clear_rectangle(global.NavMesh,x-24,y-48,x+24,y+48);
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>0,40</point>
-    <point>24,40</point>
-    <point>24,96</point>
+    <point>8,40</point>
+    <point>8,96</point>
     <point>0,96</point>
   </PhysicsShapePoints>
 </object>

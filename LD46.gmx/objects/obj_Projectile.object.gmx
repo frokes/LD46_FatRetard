@@ -142,7 +142,7 @@ fric = 2;
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>8,8</point>
-    <point>6,8</point>
+    <point>12,12</point>
+    <point>12,8</point>
   </PhysicsShapePoints>
 </object>
